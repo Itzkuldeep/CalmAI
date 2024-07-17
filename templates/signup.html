@@ -1,0 +1,28 @@
+{% include 'navbar.html' %}
+{% block head %}
+{% endblock %}
+    <main>
+        <section>
+            <h2>Create an Account</h2>
+            <form id="signupForm">
+                <label for="name">Name:</label>
+                <input type="text" id="name" required>
+                <label for="email">Email:</label>
+                <input type="email" id="email" required>
+                <label for="password">Password:</label>
+                <input type="password" id="password" required>
+                <button type="submit">Sign Up</button>
+            </form>
+        </section>
+    </main>
+
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            alert('Account created successfully.');
+            document.getElementById('signupForm').reset();
+        });
+    </script>
+{% include 'footer.html' %}
+{% block down %}
+{% endblock %}

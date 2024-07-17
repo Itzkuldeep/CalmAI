@@ -1,0 +1,30 @@
+{% include 'navbar.html' %}
+{% block head %}
+{% endblock %}
+    <main>
+        <section>
+            <h2>Login to Your Account</h2>
+            <form id="loginForm">
+                <label for="email">Email:</label>
+                <input type="email" id="email" required>
+                <label for="password">Password:</label>
+                <input type="password" id="password" required>
+                <button type="submit">Login</button>
+                <center>
+                    <p>Forgot Password? <a href="/reset-password">Reset</a> <br>New User, <a href="/signup">Signup</a></p>
+                </center>
+                
+            </form>
+        </section>
+    </main>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            alert('Logged in successfully.');
+            document.getElementById('loginForm').reset();
+        });
+    </script>
+{% include 'footer.html' %}
+{% block down %}
+{% endblock %}
