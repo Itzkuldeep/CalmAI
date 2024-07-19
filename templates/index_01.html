@@ -1,6 +1,15 @@
-{% include 'navbar.html' %}
-{% block head %}
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>calmAI</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    {% include 'navbar.html' %}
+    {% block head %}
+    {% endblock %}
     <main>
         <section>
             <h1>Welcome to CalmAI</h1>
@@ -17,7 +26,8 @@
             </ul>
         </section>
     </main>
-
-{% include 'footer.html' %}
-{% block down %}
-{% endblock %}
+    {% include 'footer.html' %}
+    {% block down %}
+    {% endblock %}
+</body>
+</html>

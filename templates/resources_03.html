@@ -1,6 +1,14 @@
-{% include 'navbar.html' %}
-{% block head %}
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resources</title>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    {% block head %}
+    {% endblock %}
     <main>
         <section>
             <h2>Articles</h2>
@@ -10,7 +18,9 @@
                 <li><a href="#">Mindfulness Practices</a></li>
             </ul>
         </section>
-        
-{% include 'footer.html' %}
-{% block down %}
-{% endblock %}
+    </main>
+    {% include 'footer.html' %}
+    {% block down %}
+    {% endblock %}    
+</body>
+</html>

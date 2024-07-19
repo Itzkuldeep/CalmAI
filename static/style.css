@@ -1,13 +1,14 @@
 /* styles.css */
 
-html,body {
+body {
     font-family: 'Roboto', sans-serif;
     background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
     margin: 0;
-    height: 100%;
     padding: 0;
     color: #333;
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 header {
@@ -35,10 +36,10 @@ nav a:hover {
 }
 
 main {
+    flex: 1;
     padding: 2rem;
     position: relative;
     z-index: 1;
-    padding-bottom: 5rem; /* Added padding to avoid content overlap with the footer */
 }
 
 #services {
@@ -57,10 +58,8 @@ footer {
     background: #6200ea;
     color: #fff;
     text-align: center;
-    padding: 0.5rem 1rem;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
+    padding: 0.5rem 0.5rem;
+    width: 98.95%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -92,7 +91,7 @@ footer p:nth-child(2) a, footer p:nth-child(3) a {
     margin: 0;
 }
 
-button, select, input[type="text"], input[type="email"], textarea {
+button, select, input[type="text"], input[type="email"],input[type="password"], textarea {
     display: block;
     width: 100%;
     padding: 1rem;
