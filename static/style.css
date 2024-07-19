@@ -146,3 +146,144 @@ ul li {
 ul li:hover {
     transform: translateY(-5px);
 }
+
+.about-header {
+    background: #6200ea;
+    color: #fff;
+    padding: 2rem 0;
+    text-align: center;
+}
+
+.about-title h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+.about-title p {
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+}
+
+.about-content {
+    padding: 2rem;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+}
+
+.about-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.about-section:nth-child(even) {
+    flex-direction: row-reverse;
+}
+
+.about-text {
+    flex: 1;
+    padding: 1rem;
+}
+
+.about-image {
+    flex: 1;
+    text-align: center;
+}
+
+.about-image img {
+    max-width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.about-services {
+    background: #fff;
+    padding: 2rem;
+    text-align: center;
+}
+
+.about-services h2 {
+    color: #6200ea;
+}
+
+.about-services ul {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0;
+}
+
+.about-services li {
+    background: rgba(98, 0, 234, 0.1);
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 0.5rem 0;
+    color: #6200ea;
+    font-weight: bold;
+}
+.hero {
+    background: #6200ea;
+    color: #fff;
+    padding: 4rem 0;
+    text-align: center;
+}
+
+.hero-text h1 {
+    font-size: 3rem;
+    margin: 0;
+}
+
+.hero-text p {
+    font-size: 1.5rem;
+    margin-top: 1rem;
+}
+
+.intro {
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    padding: 2rem;
+    text-align: center;
+}
+
+.intro h2 {
+    color: #6200ea;
+}
+
+.intro p {
+    font-size: 1.2rem;
+    margin-top: 1rem;
+}
+
+.highlights {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 2rem;
+    background: #fff;
+}
+
+.highlight {
+    flex: 1 1 300px;
+    margin: 1rem;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.highlight img {
+    max-width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.highlight h3 {
+    color: #6200ea;
+    margin-top: 1rem;
+}
+
+.highlight p {
+    margin-top: 0.5rem;
+}
+
+.highlight:hover {
+    transform: translateY(-5px);
+}
