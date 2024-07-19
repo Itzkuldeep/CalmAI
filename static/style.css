@@ -38,6 +38,7 @@ main {
     padding: 2rem;
     position: relative;
     z-index: 1;
+    padding-bottom: 5rem; /* Added padding to avoid content overlap with the footer */
 }
 
 #services {
@@ -56,18 +57,41 @@ footer {
     background: #6200ea;
     color: #fff;
     text-align: center;
-    padding: 1rem 2rem;
+    padding: 0.5rem 1rem;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    font-size: 0.9rem;
 }
 
-footer a {
+footer p {
+    margin: 0.5rem 0;
+}
+
+footer p a {
     color: #bb86fc;
     text-decoration: none;
     margin: 0 0.5rem;
 }
 
-footer a:hover {
+footer p a:hover {
     color: #fff;
 }
+
+footer p:nth-child(2), footer p:nth-child(3) {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+footer p:nth-child(2) a, footer p:nth-child(3) a {
+    margin: 0;
+}
+
 
 button, select, input[type="text"], input[type="email"], textarea {
     display: block;
@@ -98,10 +122,12 @@ form {
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-.nav-main{
-    color:#fff;
+
+.nav-main {
+    color: #fff;
 }
-h1,h2 {
+
+h1, h2 {
     color: #6200ea;
 }
 
@@ -112,7 +138,7 @@ ul {
 
 ul li {
     background: #fff;
-    margin: 1rem 0;
+    margin: 0.5rem 0;
     padding: 1rem;
     border-radius: 5px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
