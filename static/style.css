@@ -93,7 +93,7 @@ footer p:nth-child(2) a, footer p:nth-child(3) a {
 
 button, select, input[type="text"], input[type="email"],input[type="password"], textarea {
     display: block;
-    width: 100%;
+    width: 95%;
     padding: 1rem;
     margin: 1rem 0;
     border: none;

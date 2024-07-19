@@ -1,4 +1,8 @@
-from flask import Flask, render_template
+from flask import Flask, render_template,request, redirect
+from flask import session
+import pymysql as sql
+
+
 
 app = Flask(__name__)
 
