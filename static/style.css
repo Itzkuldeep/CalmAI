@@ -1,12 +1,12 @@
 /* styles.css */
 
-body {
+html,body {
     font-family: 'Roboto', sans-serif;
     background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
     margin: 0;
+    height: 100%;
     padding: 0;
     color: #333;
-    overflow: hidden;
     position: relative;
 }
 
@@ -92,7 +92,6 @@ footer p:nth-child(2) a, footer p:nth-child(3) a {
     margin: 0;
 }
 
-
 button, select, input[type="text"], input[type="email"], textarea {
     display: block;
     width: 100%;
@@ -138,7 +137,7 @@ ul {
 
 ul li {
     background: #fff;
-    margin: 0.5rem 0;
+    margin: 1rem 0;
     padding: 1rem;
     border-radius: 5px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
