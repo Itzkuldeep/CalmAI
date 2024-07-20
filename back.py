@@ -1,7 +1,10 @@
 from flask import Flask, render_template,request, redirect
-from flask import session
 import pymysql as sql
-import random as rd
+from flask import session
+from getpass import getpass
+import math
+import random
+import smtplib
 
 app = Flask(__name__)
 
@@ -34,8 +37,18 @@ def login():
 def reset():
     return render_template("reset_06.html")
 
-@app.route('/signup')
+@app.route('/signup', methods=['GET','POST'])
 def signup():
+    ca_id = random.randrange(1,1000)
+
+    name = request.form.get("name")
+    email = request.form.get("email")
+    password = request.form.get("password")
+    phone = request.form.get("phone")
+    db,cur = connect()
+    cur.execute(f"INSERT INTO userdetail VALUES({ca_id},'{name}','{email}','{password}','{phone}')")
+    db.commit()
+
     return render_template("signup_06.html")
 
 if __name__ == '__main__':
