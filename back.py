@@ -1,11 +1,14 @@
 from flask import Flask, render_template,request, redirect
 from flask import session
 import pymysql as sql
-
-
+import random as rd
 
 app = Flask(__name__)
 
+def connect():
+    db = sql.connect(host='localhost', port=3306, user='root', password='', database='calmai')
+    cur = db.cursor()
+    return db,cur
 
 @app.route('/')
 def home():
@@ -15,13 +18,9 @@ def home():
 def about():
     return render_template("about_02.html")
 
-@app.route('/resources')
+@app.route('/services')
 def services():
-    return render_template("resources_03.html")
-
-@app.route('/self-assessment')
-def self():
-    return render_template("self_04.html")
+    return render_template("services_03.html")
 
 @app.route('/contact')
 def contact():
@@ -30,6 +29,10 @@ def contact():
 @app.route('/login')
 def login():
     return render_template("login_06.html")
+
+@app.route("/reset")
+def reset():
+    return render_template("reset_06.html")
 
 @app.route('/signup')
 def signup():

@@ -91,7 +91,7 @@ footer p:nth-child(2) a, footer p:nth-child(3) a {
     margin: 0;
 }
 
-button, select, input[type="text"], input[type="email"],input[type="password"], textarea {
+button, select, input[type="text"], input[type="email"],input[type="password"],input[type="number"], textarea {
     display: block;
     width: 95%;
     padding: 1rem;
@@ -286,4 +286,88 @@ ul li:hover {
 
 .highlight:hover {
     transform: translateY(-5px);
+}
+.reset-header {
+    background: #6200ea;
+    color: #fff;
+    padding: 4rem 0;
+    text-align: center;
+}
+
+.reset-title h1 {
+    font-size: 3rem;
+    margin: 0;
+}
+
+.reset-title p {
+    font-size: 1.5rem;
+    margin-top: 1rem;
+}
+
+.reset-form {
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    padding: 2rem;
+    text-align: center;
+    max-width: 500px;
+    margin: 2rem auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.reset-form form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.reset-form label {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.reset-form input {
+    width: 100%;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s;
+}
+
+.reset-form button {
+    background: #6200ea;
+    color: #fff;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.reset-form button:hover {
+    background: #3700b3;
+}
+
+.additional-info {
+    text-align: center;
+    padding: 2rem;
+    background: #fff;
+}
+
+.additional-info h2 {
+    color: #6200ea;
+}
+
+.additional-info p {
+    font-size: 1.2rem;
+}
+
+.additional-info a {
+    color: #6200ea;
+    text-decoration: none;
+}
+
+.additional-info a:hover {
+    text-decoration: underline;
 }

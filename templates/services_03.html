@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resources</title>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    {% block head %}
+    {% endblock %}
+    <main>
+        <section>
+            <h2>Articles</h2>
+            <ul>
+                <li><a href="#">Understanding Anxiety</a></li>
+                <li><a href="#">Coping with Stress</a></li>
+                <li><a href="#">Mindfulness Practices</a></li>
+            </ul>
+        </section>
+        <section>
+            <h2>Mental Health Self-Assessment</h2>
+            <form id="assessmentForm">
+                <label for="question1">How often do you feel anxious?</label>
+                <select id="question1">
+                    <option value="never">Never</option>
+                    <option value="rarely">Rarely</option>
+                    <option value="sometimes">Sometimes</option>
+                    <option value="often">Often</option>
+                    <option value="always">Always</option>
+                </select>
+                <label for="question2">How often do you feel down or depressed?</label>
+                <select id="question2">
+                    <option value="never">Never</option>
+                    <option value="rarely">Rarely</option>
+                    <option value="sometimes">Sometimes</option>
+                    <option value="often">Often</option>
+                    <option value="always">Always</option>
+                </select>
+                <button type="button" onclick="submitAssessment()">Submit</button>
+            </form>
+            <center>
+                <div id="result" style="font-size: larger;"></div>
+            </center>
+        </section>
+    </main>
+    {% include 'footer.html' %}
+    {% block down %}
+    {% endblock %}    
+</body>
+</html>
