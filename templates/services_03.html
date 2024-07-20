@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resources</title>
+    <title>Our Services</title>
 </head>
 <body>
     {% include 'navbar.html' %}
@@ -11,41 +12,69 @@
     {% endblock %}
     <main>
         <section>
-            <h2>Articles</h2>
-            <ul>
-                <li><a href="#">Understanding Anxiety</a></li>
-                <li><a href="#">Coping with Stress</a></li>
-                <li><a href="#">Mindfulness Practices</a></li>
-            </ul>
+            <h2>Our Services</h2>
+            <p>At calmAI, we offer a range of services designed to support your mental health and well-being. Explore our offerings and find the resources that suit your needs.</p>
         </section>
         <section>
-            <h2>Mental Health Self-Assessment</h2>
-            <form id="assessmentForm">
-                <label for="question1">How often do you feel anxious?</label>
-                <select id="question1">
-                    <option value="never">Never</option>
-                    <option value="rarely">Rarely</option>
-                    <option value="sometimes">Sometimes</option>
-                    <option value="often">Often</option>
-                    <option value="always">Always</option>
-                </select>
-                <label for="question2">How often do you feel down or depressed?</label>
-                <select id="question2">
-                    <option value="never">Never</option>
-                    <option value="rarely">Rarely</option>
-                    <option value="sometimes">Sometimes</option>
-                    <option value="often">Often</option>
-                    <option value="always">Always</option>
-                </select>
-                <button type="button" onclick="submitAssessment()">Submit</button>
-            </form>
-            <center>
-                <div id="result" style="font-size: larger;"></div>
-            </center>
+            <div class="service-block">
+                <h3>Articles</h3>
+                <p>Read informative and engaging articles on various mental health topics.</p>
+                <a href="#">Explore Articles</a>
+            </div>
+            <div class="service-block">
+                <h3>Mental Health Self-Assessment</h3>
+                <p>Take a self-assessment to gain insights into your mental health status.</p>
+                <a href="#">Take Assessment</a>
+            </div>
+            <div class="service-block">
+                <h3>Blogs</h3>
+                <p>Explore our collection of informative and engaging blog posts on various mental health topics.</p>
+                <a href="blogs.html">Read Blogs</a>
+            </div>
+            <div class="service-block">
+                <h3>Mood Tracker</h3>
+                <p>Log your moods daily to monitor your emotional health over time.</p>
+                <a href="mood_tracker.html">Track Your Mood</a>
+            </div>
+            <div class="service-block">
+                <h3>Chat with Our Bot</h3>
+                <p>Chat with our AI-powered bot for immediate support and guidance.</p>
+                <a href="chatbot.html">Start Chatting</a>
+            </div>
+            <div class="service-block">
+                <h3>Suggested YouTube Videos</h3>
+                <p>Watch curated YouTube videos related to mental health, mindfulness, and self-care.</p>
+                <a href="youtube_videos.html">View Videos</a>
+            </div>
+            <div class="service-block">
+                <h3>Notebook</h3>
+                <p>Write down your thoughts, feelings, and reflections in a secure digital notebook.</p>
+                <a href="notebook.html">Open Notebook</a>
+            </div>
         </section>
     </main>
     {% include 'footer.html' %}
     {% block down %}
-    {% endblock %}    
+    {% endblock %}
 </body>
 </html>
+<!-- 
+    <script>
+        function submitAssessment() {
+            const question1 = document.getElementById('question1').value;
+            const question2 = document.getElementById('question2').value;
+            let result = 'Assessment Result:<br>';
+
+            // Simple logic to evaluate the result based on selections
+            if (question1 === 'always' || question2 === 'always') {
+                result += 'It is recommended to seek professional help.';
+            } else if (question1 === 'often' || question2 === 'often') {
+                result += 'Consider consulting with a mental health professional.';
+            } else {
+                result += 'Keep monitoring your mental health and practicing self-care.';
+            }
+
+            document.getElementById('result').innerHTML = result;
+        }
+    </script> -->
+

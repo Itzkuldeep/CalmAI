@@ -39,17 +39,23 @@ def reset():
 
 @app.route('/signup', methods=['GET','POST'])
 def signup():
-    ca_id = random.randrange(1,1000)
-
-    name = request.form.get("name")
-    email = request.form.get("email")
-    password = request.form.get("password")
-    phone = request.form.get("phone")
-    db,cur = connect()
-    cur.execute(f"INSERT INTO userdetail VALUES({ca_id},'{name}','{email}','{password}','{phone}')")
-    db.commit()
-
     return render_template("signup_06.html")
+
+@app.route("/aftersubmit", methods = ['GET','POST'])
+def aftersubmit():
+    if request.method == 'GET':
+        return render_template('index.html')
+    else:
+        ca_id = random.randrange(1,1000)
+
+        name = request.form.get("name")
+        email = request.form.get("email")
+        password = request.form.get("password")
+        phone = request.form.get("phone")
+        db,cur = connect()
+        cur.execute(f"INSERT INTO userdetail VALUES({ca_id},'{name}','{email}','{password}','{phone}')")
+        db.commit()
+        render_template
 
 if __name__ == '__main__':
     app.run(debug=True)
