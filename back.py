@@ -5,6 +5,8 @@ from getpass import getpass
 import math
 import random
 import smtplib
+import bcrypt
+
 
 app = Flask(__name__)
 
@@ -13,9 +15,17 @@ def connect():
     cur = db.cursor()
     return db,cur
 
+def hash_password(password):
+    salt = bcrypt.gensalt()
+    hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
+    return hashed_password
+
 @app.route('/')
 def home():
-    return render_template("index_01.html")
+    if session.get('user'):
+        return render_template("index_01.html")
+    else:
+        return render_template("index_01.html")
 
 @app.route('/about')
 def about():
@@ -51,11 +61,17 @@ def aftersubmit():
         name = request.form.get("name")
         email = request.form.get("email")
         password = request.form.get("password")
+        password_hs = hash_password(password)
         phone = request.form.get("phone")
         db,cur = connect()
-        cur.execute(f"INSERT INTO userdetail VALUES({ca_id},'{name}','{email}','{password}','{phone}')")
+        cur.execute(f"INSERT INTO userdetail VALUES({ca_id},'{name}','{email}','{password_hs}','{phone}')")
         db.commit()
-        render_template
+
+        cmd1 = f"select ca_name,ca_email,ca_phn from userdetail where email = '{email} and  password_hashed = '{password_hs};"
+        cur.execute(cmd1)
+        data = cur.fetchone()
+        session['user'] = data
+        return redirect("/")
 
 if __name__ == '__main__':
     app.run(debug=True)
