@@ -5,12 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>calmAI</title>
-    <link rel="stylesheet" href="{{url_for ('static', filename='style.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <!-- <link rel="icon" href="{{url_for('static', filename='calmai-favicon-white.png')}}" type="image/x-icon"> -->
+     <link rel="x-icon" href="{{url_for('static', filename='calmai-favicon-white.png')}}" type="image/x-icon">
 </head>
 <body>
     <header>
-        <h1 class="nav-main">calmAI</h1>
+        <a href="/">
+            <img src="MAIN LOGO.svg" alt="LOGO">
+        </a>
         <nav>
             <a href="/">Home</a>
             <a href="/services">Services</a>
@@ -23,4 +27,5 @@
     </header>
 </body>
 </html>
+
 {% endblock %}
