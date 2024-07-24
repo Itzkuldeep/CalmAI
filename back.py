@@ -73,5 +73,14 @@ def aftersubmit():
         session['user'] = data
         return redirect("/")
 
+@app.route('/privacy')
+def privacy():
+    return render_template("privacy_08.html")
+
+@app.route('/terms')
+def terms():
+    return render_template("terms_07.html")
+
+
 if __name__ == '__main__':
     app.run(debug=True)
