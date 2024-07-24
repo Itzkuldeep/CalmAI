@@ -64,10 +64,10 @@ def aftersubmit():
         password_hs = hash_password(password)
         phone = request.form.get("phone")
         db,cur = connect()
-        cur.execute(f"INSERT INTO userdetail VALUES({ca_id},'{name}','{email}','{password_hs}','{phone}')")
+        cur.execute(f"INSERT INTO users VALUES({ca_id},'{name}','{email}','{password_hs}','{phone}')")
         db.commit()
 
-        cmd1 = f"select ca_name,ca_email,ca_phn from userdetail where email = '{email} and  password_hashed = '{password_hs};"
+        cmd1 = f"select ca_name,ca_email,ca_phn from users where email = '{email} and  password_hashed = '{password_hs};"
         cur.execute(cmd1)
         data = cur.fetchone()
         session['user'] = data
@@ -81,6 +81,9 @@ def privacy():
 def terms():
     return render_template("terms_07.html")
 
+@app.route('/chatbot')
+def chatbot():
+    return render_template("chatbot_09.html")
 
 if __name__ == '__main__':
     app.run(debug=True)
