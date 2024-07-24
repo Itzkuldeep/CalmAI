@@ -8,12 +8,12 @@
     <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <!-- <link rel="icon" href="{{url_for('static', filename='calmai-favicon-white.png')}}" type="image/x-icon"> -->
-     <link rel="x-icon" href="{{url_for('static', filename='calmai-favicon-white.png')}}" type="image/x-icon">
+     <link rel="shortcut icon" href="{{url_for('static', filename='calmai-favicon-white.png')}}" type="image/x-icon">
 </head>
 <body>
     <header>
         <a href="/">
-            <img src="MAIN LOGO.svg" alt="LOGO">
+            <img src="{{url_for('static', filename='MAIN LOGO.png')}}" alt="LOGO" > 
         </a>
         <nav>
             <a href="/">Home</a>
