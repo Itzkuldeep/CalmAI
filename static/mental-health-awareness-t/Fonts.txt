@@ -1,0 +1,9 @@
+Fonts used in this design:
+
+Font: Chivo
+Author: Omnibus Type
+Url: http://www.fontsquirrel.com/fonts/chivo
+
+Font: Glacial Indifference
+Author: Hanken Design Co.
+Url: http://www.fontsquirrel.com/fonts/glacial-indifference
