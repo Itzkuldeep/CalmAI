@@ -72,14 +72,9 @@ def login():
         email = request.form.get('email')
         password = request.form.get('password')
         db,cur = connect()
-        cur.execute("SELECT user_id,username,email,phone FROM users WHERE email = %s and password_hash = %s", (email,password))
+        cur.execute(f"SELECT user_id,username,email,phone FROM users WHERE email = '{email}' and password_hash = '{password}';")
         data = cur.fetchone()
         db.commit()
-
-        if data and verify_password(data[0], password):
-            return "Login successful"
-        else:
-            return "Invalid email or password"
 
         if data:
             session['user'] = data
@@ -105,12 +100,12 @@ def aftersubmit():
         ca_id = random.randrange(1, 1000)
         name = request.form.get("name")
         email = request.form.get("email")
-        password = request.form.get("password")
-        password_hs = hash_password(password)
+        password_hs = request.form.get("password")
+        # password_hs = hash_password(password)
         phone = request.form.get("phone")
 
         db, cur = connect()
-        if passkey(password):
+        if passkey(password_hs):
             query = "INSERT INTO users (user_id, username, email, password_hash, phone) VALUES (%s, %s, %s, %s, %s)"
             values = (ca_id, name, email, password_hs, phone)
         else:
