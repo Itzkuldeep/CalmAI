@@ -1,4 +1,4 @@
-from flask import Flask, render_template,request, redirect
+from flask import *
 import pymysql as sql
 from flask import session
 from getpass import getpass
@@ -9,6 +9,8 @@ import bcrypt
 
 
 app = Flask(__name__)
+
+app.secret_key = 'ferhgeoriugheoighelgng45546rherojheg@'
 
 def passkey(password):
         
@@ -67,19 +69,26 @@ def contact():
 @app.route('/login', methods=['POST','GET'])
 def login():
     if request.method == 'POST':
-        email = request.form['email']
-        password = request.form['password']
+        email = request.form.get('email')
+        password = request.form.get('password')
         db,cur = connect()
         cur.execute("SELECT user_id,username,email,phone FROM users WHERE email = %s and password_hash = %s", (email,password))
         data = cur.fetchone()
+        db.commit()
 
-        if data and verify_password([0], password):
+        if data and verify_password(data[0], password):
+            return "Login successful"
+        else:
+            return "Invalid email or password"
+
+        if data:
             session['user'] = data
             return redirect('/')
         else:
-            return render_template("login_06.html",message='Invalid Credentials')
-            # flash('Invalid email or password')
-    return render_template("login_06.html")
+            return render_template("login_06.html", message="Invalid Credentials")
+    
+    return render_template('login_06.html')
+
 @app.route("/reset")
 def reset():
     return render_template("reset_06.html")
@@ -105,7 +114,8 @@ def aftersubmit():
             query = "INSERT INTO users (user_id, username, email, password_hash, phone) VALUES (%s, %s, %s, %s, %s)"
             values = (ca_id, name, email, password_hs, phone)
         else:
-            return render_template("signup_06.html", error="Password must be at least 8 characters")
+            flash('Password is not rigth , Fix the password!')
+            return render_template("signup_06.html")
         try:
             cur.execute(query, values)
             db.commit()
