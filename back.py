@@ -17,8 +17,8 @@ def connect():
 
 def hash_password(password):
     salt = bcrypt.gensalt()
-    hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
-    return hashed_password
+    hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
+    return hashed
 
 @app.route('/')
 def home():
@@ -51,23 +51,31 @@ def reset():
 def signup():
     return render_template("signup_06.html")
 
-@app.route("/aftersubmit", methods = ['GET','POST'])
+@app.route("/aftersubmit", methods=['GET', 'POST'])
 def aftersubmit():
     if request.method == 'GET':
         return render_template('index.html')
     else:
-        ca_id = random.randrange(1,1000)
-
+        ca_id = random.randrange(1, 1000)
         name = request.form.get("name")
         email = request.form.get("email")
-        password = request.form.get("password")
-        password_hs = hash_password(password)
+        password_hs = request.form.get("password")
+        # password_hs = hash_password(password)
         phone = request.form.get("phone")
-        db,cur = connect()
-        cur.execute(f"INSERT INTO users VALUES({ca_id},'{name}','{email}','{password_hs}','{phone}')")
-        db.commit()
 
-        cmd1 = f"select ca_name,ca_email,ca_phn from users where email = '{email} and  password_hashed = '{password_hs};"
+        db, cur = connect()
+        query = "INSERT INTO users (user_id, username, email, password_hash, phone) VALUES (%s, %s, %s, %s, %s)"
+        values = (ca_id, name, email, password_hs, phone)
+
+        try:
+            cur.execute(query, values)
+            db.commit()
+        except sql.MySQLError as e:
+            print(f"Error: {e}")
+            db.rollback()  # Roll back the transaction in case of error
+
+        # return "User successfully registered"        
+        cmd1 = f"select user_id,username,email,phone from users where email = '{email} and  password_hash = '{password_hs};"
         cur.execute(cmd1)
         data = cur.fetchone()
         session['user'] = data
