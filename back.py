@@ -10,6 +10,28 @@ import bcrypt
 
 app = Flask(__name__)
 
+def passkey(password):
+        
+    lower= 0
+    upper=0
+    special = 0
+    digit = 0
+    
+    for char in password:
+        if char.isdigit():
+            digit += 1
+        elif char.isupper():
+            upper += 1
+        elif char.islower():
+            lower += 1
+        elif not char.isidentifier():
+            special += 1
+        
+    if lower>=1 and upper>=1 and digit>=1 and special>=1 and len(password)>=8:
+        return True
+    else:
+        return False
+    
 def connect():
     db = sql.connect(host='localhost', port=3306, user='root', password='', database='calmai')
     cur = db.cursor()
@@ -42,24 +64,22 @@ def services():
 def contact():
     return render_template("contact_05.html")
 
-@app.route("/login", methods=['GET', 'POST'])
+@app.route('/login', methods=['POST','GET'])
 def login():
-    if request.method == 'GET':
-        return render_template('login.html')
-    else:
-        email = request.form.get("email")
-        password = request.form.get("password")
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        db,cur = connect()
+        cur.execute("SELECT user_id,username,email,phone FROM users WHERE email = %s and password_hash = %s", (email,password))
+        data = cur.fetchone()
 
-        db, cur = connect()
-        query = "SELECT password_hash FROM users WHERE email = %s"
-        cur.execute(query, (email,))
-        result = cur.fetchone()
-        
-        if result and verify_password(result[0], password):
-            return "Login successful"
+        if data and verify_password([0], password):
+            session['user'] = data
+            return redirect('/')
         else:
-            return "Invalid email or password"
-
+            return render_template("login_06.html",message='Invalid Credentials')
+            # flash('Invalid email or password')
+    return render_template("login_06.html")
 @app.route("/reset")
 def reset():
     return render_template("reset_06.html")
@@ -81,9 +101,11 @@ def aftersubmit():
         phone = request.form.get("phone")
 
         db, cur = connect()
-        query = "INSERT INTO users (user_id, username, email, password_hash, phone) VALUES (%s, %s, %s, %s, %s)"
-        values = (ca_id, name, email, password_hs, phone)
-
+        if passkey(password):
+            query = "INSERT INTO users (user_id, username, email, password_hash, phone) VALUES (%s, %s, %s, %s, %s)"
+            values = (ca_id, name, email, password_hs, phone)
+        else:
+            return render_template("signup_06.html", error="Password must be at least 8 characters")
         try:
             cur.execute(query, values)
             db.commit()
