@@ -20,6 +20,9 @@ def hash_password(password):
     hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
     return hashed
 
+def verify_password(stored_password_hash, provided_password):
+    return bcrypt.checkpw(provided_password.encode('utf-8'), stored_password_hash)
+
 @app.route('/')
 def home():
     if session.get('user'):
@@ -39,9 +42,23 @@ def services():
 def contact():
     return render_template("contact_05.html")
 
-@app.route('/login')
+@app.route("/login", methods=['GET', 'POST'])
 def login():
-    return render_template("login_06.html")
+    if request.method == 'GET':
+        return render_template('login.html')
+    else:
+        email = request.form.get("email")
+        password = request.form.get("password")
+
+        db, cur = connect()
+        query = "SELECT password_hash FROM users WHERE email = %s"
+        cur.execute(query, (email,))
+        result = cur.fetchone()
+        
+        if result and verify_password(result[0], password):
+            return "Login successful"
+        else:
+            return "Invalid email or password"
 
 @app.route("/reset")
 def reset():
@@ -59,8 +76,8 @@ def aftersubmit():
         ca_id = random.randrange(1, 1000)
         name = request.form.get("name")
         email = request.form.get("email")
-        password_hs = request.form.get("password")
-        # password_hs = hash_password(password)
+        password = request.form.get("password")
+        password_hs = hash_password(password)
         phone = request.form.get("phone")
 
         db, cur = connect()
@@ -75,10 +92,10 @@ def aftersubmit():
             db.rollback()  # Roll back the transaction in case of error
 
         # return "User successfully registered"        
-        cmd1 = f"select user_id,username,email,phone from users where email = '{email} and  password_hash = '{password_hs};"
-        cur.execute(cmd1)
-        data = cur.fetchone()
-        session['user'] = data
+        # cmd1 = f"select user_id,username,email,phone from users where email = '{email} and  password_hash = '{password_hs};"
+        # cur.execute(cmd1)
+        # data = cur.fetchone()
+        # session['user'] = data
         return redirect("/")
 
 @app.route('/privacy')
