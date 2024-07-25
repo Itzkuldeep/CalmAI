@@ -3,7 +3,10 @@
 {% endblock %}
     <main>
         <section>
-            <h2>Create an Account</h2>
+            <center>
+                <h2>Create an Account</h2>
+                <h4 style="color: red;">{{message}}</h4>
+            </center>
             <form action="/aftersubmit" method="post">
                 <label for="name">Name:</label>
                 <input type="text" id="name" name="name" required>

@@ -8,6 +8,7 @@ import smtplib
 import bcrypt
 
 
+
 app = Flask(__name__)
 
 app.secret_key = 'ferhgeoriugheoighelgng45546rherojheg@'
@@ -36,8 +37,8 @@ def passkey(password):
     
 def connect():
     db = sql.connect(host='localhost', port=3306, user='root', password='', database='calmai')
-    cur = db.cursor()
-    return db,cur
+    cur = db.cursor(sql.cursors.DictCursor)
+    return db,cur 
 
 def hash_password(password):
     salt = bcrypt.gensalt()
@@ -69,24 +70,50 @@ def contact():
 @app.route('/login', methods=['POST','GET'])
 def login():
     if request.method == 'POST':
-        email = request.form.get('email')
+        email = request.form.get('email').strip().lower()
         password = request.form.get('password')
-        db,cur = connect()
-        cur.execute(f"SELECT user_id,username,email,phone FROM users WHERE email = '{email}' and password_hash = '{password}';")
-        data = cur.fetchone()
-        db.commit()
 
-        if data:
-            session['user'] = data
-            return redirect('/')
-        else:
-            return render_template("login_06.html", message="Invalid Credentials")
-    
+        db, cur = connect()
+        try:
+            # Execute SQL query with parameters
+            cur.execute(f"SELECT user_id, username, email, phone FROM users WHERE email = '{email}' and password_hash = '{password}';")
+            data = cur.fetchone()
+
+            if data:
+                # Check if the entered password matches the stored hashed password
+                if bcrypt.checkpw(password.encode('utf-8'), data['password_hash'].encode('utf-8')):
+                    session['user'] = data['username']  # Store username in session
+                    return redirect('/')
+                else:
+                    print("Password does not match")
+            else:
+                print("Email not found")
+        except Exception as e:
+            print(f"Database error: {e}")
+        finally:
+            db.close()  # Close the database connection
+
+        return render_template("login_06.html", message="Invalid Credentials")
+
     return render_template('login_06.html')
 
 @app.route("/reset")
 def reset():
-    return render_template("reset_06.html")
+    if not session.get('user'):
+        return redirect('/login')
+    db,cur = connect()
+    name  =  session.get("user")
+    if request.method =='GET':
+        digits = '0123456789'
+        OTP=''
+        for i in range(6):
+            OTP+=digits[math.floor(random.random()*10)]
+        otp = OTP + 'is your OTP valid for 5 minutes'
+        msg = otp
+        s = smtplib.SMTP('smtp.gmail.com', 587)
+        s.starttls()
+        s.login("takkuldeepsingh02@gmail.com", "")
+
 
 @app.route('/signup', methods=['GET','POST'])
 def signup():
@@ -100,17 +127,16 @@ def aftersubmit():
         ca_id = random.randrange(1, 1000)
         name = request.form.get("name")
         email = request.form.get("email")
-        password_hs = request.form.get("password")
-        # password_hs = hash_password(password)
+        password = request.form.get("password")
+        password_hs = hash_password(password)
         phone = request.form.get("phone")
 
         db, cur = connect()
-        if passkey(password_hs):
+        if passkey(password):
             query = "INSERT INTO users (user_id, username, email, password_hash, phone) VALUES (%s, %s, %s, %s, %s)"
             values = (ca_id, name, email, password_hs, phone)
         else:
-            flash('Password is not rigth , Fix the password!')
-            return render_template("signup_06.html")
+            return render_template("signup_06.html", message = "Password is not Right")
         try:
             cur.execute(query, values)
             db.commit()
