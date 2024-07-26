@@ -99,21 +99,7 @@ def login():
 
 @app.route("/reset")
 def reset():
-    if not session.get('user'):
-        return redirect('/login')
-    db,cur = connect()
-    name  =  session.get("user")
-    if request.method =='GET':
-        digits = '0123456789'
-        OTP=''
-        for i in range(6):
-            OTP+=digits[math.floor(random.random()*10)]
-        otp = OTP + 'is your OTP valid for 5 minutes'
-        msg = otp
-        s = smtplib.SMTP('smtp.gmail.com', 587)
-        s.starttls()
-        s.login("takkuldeepsingh02@gmail.com", "")
-
+    return render_template("reset_07.html")
 
 @app.route('/signup', methods=['GET','POST'])
 def signup():
@@ -124,15 +110,16 @@ def aftersubmit():
     if request.method == 'GET':
         return render_template('index.html')
     else:
-        ca_id = random.randrange(1, 1000)
+        digits = '0123456789'
+        ca_id = digits[math.floor(random.random()*10)]
         name = request.form.get("name")
         email = request.form.get("email")
-        password = request.form.get("password")
-        password_hs = hash_password(password)
+        password_hs = request.form.get("password")
+        # password_hs = hash_password(password)
         phone = request.form.get("phone")
 
         db, cur = connect()
-        if passkey(password):
+        if passkey(password_hs):
             query = "INSERT INTO users (user_id, username, email, password_hash, phone) VALUES (%s, %s, %s, %s, %s)"
             values = (ca_id, name, email, password_hs, phone)
         else:
@@ -143,13 +130,12 @@ def aftersubmit():
         except sql.MySQLError as e:
             print(f"Error: {e}")
             db.rollback()  # Roll back the transaction in case of error
-
-        # return "User successfully registered"        
-        # cmd1 = f"select user_id,username,email,phone from users where email = '{email} and  password_hash = '{password_hs};"
+        
+        # cmd1 = f"select user_id,username,email,phone from users where email = '{email}' and  password_hash = '{password_hs}';"
         # cur.execute(cmd1)
         # data = cur.fetchone()
         # session['user'] = data
-        return redirect("/")
+        return render_template("index_01.html", message = "User successfully registered")
 
 @app.route('/privacy')
 def privacy():
