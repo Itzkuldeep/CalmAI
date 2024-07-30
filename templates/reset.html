@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Password - calmAI</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+
+    </style>
+</head>
+<body>
+    <div class="reset-container">
+        <div class="reset-header">Reset Your Password</div>
+        <div class="reset-instructions">Enter the OTP sent to your registered email and your new password below.</div>
+        <form action="/verifyotp" method="POST">
+            <input type="text" name="otp" class="reset-input" placeholder="Enter OTP" required>
+            <input type="password" name="new_password" class="reset-input" placeholder="New Password" required>
+            <!-- <input type="password" name="confirm_password" class="reset-input" placeholder="Confirm Password" required> -->
+            <button type="submit" class="reset-button">Reset Password</button>
+        </form>
+        <a href="/login/" class="back-to-login">Back to Login</a>
+    </div>
+</body>
+</html>

@@ -3,6 +3,7 @@ from flask_session import Session
 import random as rd
 import math
 import pymysql as sql
+import smtplib
 
 
 app = Flask(__name__)
@@ -59,8 +60,8 @@ def contact():
 @app.route('/login/', methods=['GET','POST'])
 def login():
     if request.method == 'POST':
-        email = request.form['email']
-        password = request.form['password']
+        email = request.form.get*('email')
+        password = request.form.get('password')
         db,cur = conn()
         try:
             cmd = f"SELECT username,email,phone FROM users where email ='{email}' and password_hash = '{password}';"
@@ -76,6 +77,65 @@ def login():
             print(e)
             return render_template('login_06.html', message = 'Invalid Credentials')
     return render_template('login_06.html')
+
+
+@app.route('/reset', methods=['GET','POST'])
+def reset():
+    email = request.form.get('email')
+    session['email'] = email
+    return render_template("reset_06.html")
+
+@app.route('/otp', methods = ['GET','POST'])
+def otp():
+    db,cur = conn()
+
+    if request.method=="GET":
+        return redirect('/reset/')
+
+    if request.method == 'POST':
+       
+        
+    
+        email = request.form.get('email')
+        session['email'] = email
+        digits = '0123456789'
+        OTP = ''
+        for i in range(6):
+            OTP += digits[rd.randint(0, len(digits) - 1)]
+        otp = OTP + ' is you OTP'
+        msg = otp
+        s = smtplib.SMTP('smtp.gmail.com', 587)
+        s.starttls()
+        s.login("itzkuldeep2002@gmail.com", "shqatengaswhpcjc")
+        print(session.get('email'))
+       
+        s.sendmail('&&&&&&&&&&&',email,msg)
+        session['otp']=OTP
+        print(session['otp'])     
+        return render_template("reset.html")
+
+@app.route('/verifyotp',methods=["POST"])
+def verifyotp():
+    db,cur = conn()
+    otp = request.form.get('otp')
+    if str(otp) == str(session.get('otp')):
+        print('Verified')
+        new_pass = request.form.get('new_password')
+        if passkey(new_pass):
+            cmd1 = f"UPDATE users SET password_hash = '{new_pass}' WHERE email = '{session['email']}';"
+            cur.execute(cmd1)
+            db.commit()
+            session['otp']=None
+    
+            return redirect('/')
+        else:
+            return {"message":"Invalid password format. Password must be at least 8 characters long and contain at least one number, one uppercase letter, one lowercase letter, and one special character"}
+    else:
+        return {"message":"Please Check your OTP again"}
+    
+    
+
+
 @app.route('/signup/')
 def signup():
     return render_template('signup_06.html')
