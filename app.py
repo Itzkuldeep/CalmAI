@@ -165,12 +165,15 @@ def aftersubmit():
         
 @app.route('/notebook')
 def notebook():
-        db,cur = conn()
-        cur.execute('SELECT * FROM notes')
-        notes = cur.fetchone()
-        print(notes)
-        db.close()
-        return render_template('notebook.html', notes=notes)
+    db, cur = conn()
+    cur.execute('SELECT content FROM notes')
+    note = cur.fetchone()  # Fetch one row
+    if note is None:
+        note = []  # Or handle as per your requirement
+    print(note)
+    return render_template('notebook.html', note=note)
+
+
 
 @app.route('/add_note', methods=['POST'])
 def add_note():
