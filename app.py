@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request, session
+from flask import Flask, render_template, redirect, request, session, jsonify
 from flask_session import Session
 import random as rd
 import math
@@ -10,6 +10,8 @@ app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
+
+notes = []
 
 def conn():
     db = sql.connect(host='localhost', user='root', password='', database='calmai')
@@ -60,16 +62,17 @@ def contact():
 @app.route('/login/', methods=['GET','POST'])
 def login():
     if request.method == 'POST':
-        email = request.form.get*('email')
+        email = request.form.get('email')
         password = request.form.get('password')
         db,cur = conn()
         try:
-            cmd = f"SELECT username,email,phone FROM users where email ='{email}' and password_hash = '{password}';"
+            cmd = f"SELECT user_id,username,email,phone FROM users where email ='{email}' and password_hash = '{password}';"
             cur.execute(cmd)
             data = cur.fetchone()
             if data:
-                session['name'] = data[0]
-                session['email'] = data[1]
+                session['user_id'] = data[0]
+                session['name'] = data[1]
+                session['email'] = data[2]
                 return redirect('/')
             else:
                 print('Details does not match')
@@ -145,6 +148,7 @@ def aftersubmit():
     if request.method == 'POST':
         digits = '0123456789'
         id = math.floor(rd.random()*1000000)
+        session['user_id'] = id
         name = request.form.get('name')
         session['name'] = name
         email = request.form.get('email')
@@ -159,6 +163,32 @@ def aftersubmit():
         else:
             return render_template('signup_06.html', message = 'Invalid details Try Again')
         
+@app.route('/notebook')
+def notebook():
+        db,cur = conn()
+        cur.execute('SELECT * FROM notes')
+        notes = cur.fetchone()
+        print(notes)
+        db.close()
+        return render_template('notebook.html', notes=notes)
+
+@app.route('/add_note', methods=['POST'])
+def add_note():
+    note_text = request.form.get('note')
+    db,cur = conn()
+    if note_text.strip() != '':
+        cur.execute(f"INSERT INTO notes (content) VALUES ('{note_text}');")
+        db.commit()
+        db.close()
+    return redirect('/notebook')
+
+@app.route('/delete_note', methods=['POST'])
+def delete_note():
+    db,cur = conn()
+    cur.execute(f"DELETE FROM notes WHERE user_id = '{id}' ")
+    db.commit()
+    return redirect('/notebook')
+
 
 @app.route("/logout")
 def logout():
