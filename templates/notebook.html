@@ -11,10 +11,18 @@
     {% block head %}
     {% endblock %}
     <div id="note-app">
-        <form action="/add_note" method="POST">
-            <input type="text" name="note" id="note-input" placeholder="Enter your note">
-            <button type="submit">Save Note</button>
-        </form>
+                <form action="/add_note" method="POST">
+                    <h2>Write a Note</h2>
+                    <textarea id="note-input" name="note" placeholder="Express your thoughts here..."></textarea>
+                    <button type="submit">Save Note</button>
+                </form>
+            </div>
+        </div>
+        <div class="notes-list" id="notes-list">
+            <center>
+                <h2>Your Notes</h2>
+            </center>
+        </div>
         <div id="notes-list">
             {% if note %}
                 <div class="note">
@@ -25,7 +33,9 @@
                     </form>
                 </div>
             {% else %}
-                <p>No Note Found</p>
+                <center>
+                <p>No Previous Notes Found</p>
+                </center>
             {% endif %}
         </div>
     </div>
