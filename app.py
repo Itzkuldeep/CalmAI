@@ -11,7 +11,6 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
-notes = []
 
 def conn():
     db = sql.connect(host='localhost', user='root', password='', database='calmai')
@@ -71,14 +70,15 @@ def login():
             data = cur.fetchone()
             if data:
                 session['user_id'] = data[0]
+                print(session['user_id'])
                 session['name'] = data[1]
                 session['email'] = data[2]
                 return redirect('/')
             else:
-                print('Details does not match')
+                return render_template('login_06.html', message = 'Invalid Credentials')
         except Exception as e:
             print(e)
-            return render_template('login_06.html', message = 'Invalid Credentials')
+            print('Details does not match')
     return render_template('login_06.html')
 
 
@@ -166,7 +166,8 @@ def aftersubmit():
 @app.route('/notebook')
 def notebook():
     db, cur = conn()
-    cur.execute('SELECT content FROM notes')
+    id = session['user_id']
+    cur.execute(f"SELECT content FROM notes WHERE user_id = {id};")
     note = cur.fetchone()  # Fetch one row
     if note is None:
         note = []  # Or handle as per your requirement
@@ -178,17 +179,20 @@ def notebook():
 @app.route('/add_note', methods=['POST'])
 def add_note():
     note_text = request.form.get('note')
+    user_id = session['user_id']
+    print(session['user_id'])
+    print(id)
     db,cur = conn()
     if note_text.strip() != '':
-        cur.execute(f"INSERT INTO notes (content) VALUES ('{note_text}');")
+        cur.execute(f"INSERT INTO notes (user_id,content) VALUES ({user_id},'{note_text}');")
         db.commit()
-        db.close()
     return redirect('/notebook')
 
 @app.route('/delete_note', methods=['POST'])
 def delete_note():
     db,cur = conn()
-    cur.execute(f"DELETE FROM notes WHERE user_id = '{id}' ")
+    id = session['user_id']
+    cur.execute(f"DELETE FROM notes WHERE user_id = '{id}';")
     db.commit()
     return redirect('/notebook')
 
