@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request, session, jsonify
+from flask import Flask, render_template, redirect, request, session,flash
 from flask_session import Session
 import random as rd
 import math
@@ -73,7 +73,8 @@ def login():
                 print(session['user_id'])
                 session['name'] = data[1]
                 session['email'] = data[2]
-                return redirect('/')
+                flash = ('Logged in Successfully!!!')
+                return render_template('index_01.html', flash=flash)
             else:
                 return render_template('login_06.html', message = 'Invalid Credentials')
         except Exception as e:
@@ -159,7 +160,8 @@ def aftersubmit():
         if passkey(password):
             cur.execute(f"INSERT INTO users (user_id,username,email,password_hash,phone) VALUES ({id},'{name}','{email}','{password}','{phone}');")
             db.commit()
-            return redirect('/')
+            flash('Acoount Created Successfull!!!')
+            return render_template('index_01.html', flash=flash)
         else:
             return render_template('signup_06.html', message = 'Invalid details Try Again')
         

@@ -1,20 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>calmAI</title>
     <link rel="stylesheet" href="styles.css">
-     <!-- <link rel="icon" href="{{url_for('static', filename='calmai-favicon-white.png')}}" type="image/x-icon"> -->
-     <link rel="shortcut icon" href="{{url_for('static', filename='calmai-favicon-white.png')}}" type="image/x-icon">
+    <!-- <link rel="icon" href="{{url_for('static', filename='calmai-favicon-white.png')}}" type="image/x-icon"> -->
+    <link rel="shortcut icon" href="{{url_for('static', filename='calmai-favicon-white.png')}}" type="image/x-icon">
 </head>
+
 <body>
     {% include 'navbar.html' %}
     {% block head %}
     {% endblock %}
     <main>
         <center>
-            <h4 style="color: red;">{{message}}</h4>
+            {% for msg in get_flashed_messages() %}
+            <div class="alert alert-success  alert-dismissible fade show" role="alert">
+                <strong>{{ msg }}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
         </center>
         <section class="hero">
             <div class="hero-text">
@@ -24,7 +31,8 @@
         <section class="intro">
             <h2>Our Mission</h2>
             <p>
-                At calmAI, we are dedicated to providing accessible and personalized mental health support through advanced AI technology.
+                At calmAI, we are dedicated to providing accessible and personalized mental health support through
+                advanced AI technology.
                 Our goal is to create a compassionate and supportive environment for everyone.
             </p>
         </section>
@@ -57,4 +65,5 @@
     {% block down %}
     {% endblock %}
 </body>
+
 </html>
