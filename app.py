@@ -73,8 +73,8 @@ def login():
                 print(session['user_id'])
                 session['name'] = data[1]
                 session['email'] = data[2]
-                flash = ('Logged in Successfully!!!')
-                return render_template('index_01.html', flashed=flash)
+                flash('Logged in Successfully!!!')
+                return render_template('index_01.html', flash=flash)
             else:
                 return render_template('login_06.html', message = 'Invalid Credentials')
         except Exception as e:

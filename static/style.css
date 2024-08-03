@@ -486,11 +486,12 @@ ul li:hover {
 .container {
     margin: 20px;
 }
+
 .note-container {
     background-color: white;
     padding: 20px;
     border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
 }
 
 textarea {
@@ -505,7 +506,7 @@ textarea {
 
 button {
     background-color: #4CAF50;
-    color: white;
+    /* color: white; */
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
@@ -519,11 +520,11 @@ button {
 
 .note {
     background-color: #fff;
-    padding: 10px;
-    border: 1px solid #ddd;
+    padding: 1px;
+    /* border: 1px solid #ddd; */
     border-radius: 5px;
     margin-bottom: 10px;
-    display: flex;
+    display:flex;
     justify-content: space-between;
     align-items: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -537,11 +538,14 @@ button {
 
 .note-content {
     flex-grow: 1;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 16px;
 }
 
 .delete-btn {
     background-color: #ff4d4d;
-    color: white;
+    /* color: white; */
     padding: 5px 10px;
     border: none;
     border-radius: 5px;
@@ -552,3 +556,6 @@ button {
 .delete-btn:hover {
     background-color: #d43f3f;
 }
+
+
+
