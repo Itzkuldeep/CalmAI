@@ -76,7 +76,8 @@ def login():
                 flash('Logged in Successfully!!!')
                 return render_template('index_01.html', flash=flash)
             else:
-                return render_template('login_06.html', message = 'Invalid Credentials')
+                flash('Invalid Credentials')
+                return render_template('login_06.html', message = flash)
         except Exception as e:
             print(e)
             print('Details does not match')
@@ -206,3 +207,4 @@ def logout():
 
 if __name__ == '__main__':
     app.run(debug=True)
+    

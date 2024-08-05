@@ -5,7 +5,12 @@
         <section>
             <center>
                 <h2>Login to Your Account</h2>
-                <h4 style="color: red;">{{message}}</h4>
+                {% for message in get_flashed_messages() %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>{{ message }}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endfor %}
             </center>
             <form action="/login" method="post">
                 <label for="email">Email:</label>
