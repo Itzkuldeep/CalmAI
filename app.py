@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request, session,flash
+from flask import Flask, render_template, redirect, request, session, flash
 from flask_session import Session
 import random as rd
 import math
@@ -13,17 +13,19 @@ Session(app)
 
 
 def conn():
-    db = sql.connect(host='localhost', user='root', password='', database='calmai')
+    db = sql.connect(host='localhost', user='root',
+                     password='', database='calmai')
     cur = db.cursor()
-    return db,cur 
+    return db, cur
+
 
 def passkey(password):
-        
-    lower= 0
-    upper=0
+
+    lower = 0
+    upper = 0
     special = 0
     digit = 0
-    
+
     for char in password:
         if char.isdigit():
             digit += 1
@@ -33,12 +35,12 @@ def passkey(password):
             lower += 1
         elif not char.isidentifier():
             special += 1
-        
-    if lower>=1 and upper>=1 and digit>=1 and special>=1 and len(password)>=8:
+
+    if lower >= 1 and upper >= 1 and digit >= 1 and special >= 1 and len(password) >= 8:
         return True
     else:
         return False
-    
+
 
 @app.route('/')
 def home():
@@ -46,16 +48,47 @@ def home():
         return render_template('login_06.html')
     return render_template('index_01.html')
 
+
 @app.route('/services/')
 def service():
     return render_template('services_03.html')
+
 
 @app.route('/about/')
 def about():
     return render_template('about_02.html')
 
-@app.route('/contact')
+@app.route('/contact', methods = ['POST','GET'])
 def contact():
+    return render_template("contact_05.html")
+
+@app.route("/aftercontact", methods=['GET', 'POST'])
+def aftercontact():
+    if request.method == "POST":
+        name = request.form.get("name")
+        email = request.form.get("email")
+        text = request.form.get("message")
+        user_id = session.get('user_id')  # Use get to avoid KeyError if 'user_id' is not in session
+        
+        db, cur = conn()
+        try:
+            cur.execute("SELECT email FROM users WHERE email = %s", (email,))
+            data = cur.fetchone()
+            
+            if data:
+                cur.execute("INSERT INTO contact (user_id, name, email, text) VALUES (%s, %s, %s, %s)", (user_id, name, email, text))
+                db.commit()
+                flash('Thank you for contacting us. We will get back to you shortly.')
+                return redirect('/contact')
+            else:
+                flash("Didn't find your email, try again")
+                return redirect('/signup/')
+        except Exception as e:
+            flash(f"An error occurred: {e}")
+        finally:
+            cur.close()
+            db.close()
+    
     return render_template('contact_05.html')
 
 @app.route('/login/', methods=['GET','POST'])
@@ -164,7 +197,8 @@ def aftersubmit():
             flash('Acoount Created Successfull!!!')
             return render_template('index_01.html', flash=flash)
         else:
-            return render_template('signup_06.html', message = 'Invalid details Try Again')
+            flash('Invalid details Try Again')
+            return render_template('signup_06.html', message = flash)
         
 @app.route('/notebook')
 def notebook():

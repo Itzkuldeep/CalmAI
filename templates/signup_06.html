@@ -4,6 +4,14 @@
     <main>
         <section>
             <center>
+                {% for flash in get_flashed_messages() %}
+                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                    <strong>{{ flash }}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endfor %}
+            </center>
+            <center>
                 <h2>Create an Account</h2>
                 <h4 style="color: red;">{{message}}</h4>
             </center>

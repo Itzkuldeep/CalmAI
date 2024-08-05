@@ -1,33 +1,33 @@
 {% include 'navbar.html' %}
 {% block head %}
 {% endblock %}
-    <main>
-        <section>
+<main>
+    <section>
+        <center>
+            {% for flash in get_flashed_messages() %}
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                <strong>{{ flash }}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+        </center>
+        <center>
+            <h2>Get in Touch</h2>
+        </center>
+        <form action="/aftercontact" method="post">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" required></textarea>
             <center>
-                <h2>Get in Touch</h2>
+                <br>
+                <button type="submit">Submit</button>
             </center>
-            <form id="contactForm">
-                <label for="name">Name:</label>
-                <input type="text" id="name" required>
-                <label for="email">Email:</label>
-                <input type="email" id="email" required>
-                <label for="message">Message:</label>
-                <textarea id="message" required></textarea>
-                <center>
-                    <button type="submit">Submit</button>
-                </center>
-            </form>
-        </section>
-    </main>
-    <script>
-        document.getElementById('contactForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            alert('Thank you for contacting us. We will get back to you shortly.');
-            document.getElementById('contactForm').reset();
-        });
-    </script>
+        </form>
+    </section>
+</main>
 {% include 'footer.html' %}
 {% block down %}
 {% endblock %}
-    
-
