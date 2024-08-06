@@ -642,7 +642,7 @@ button {
     text-decoration: underline;
 }
 
-/* Responsive Design */
+/* Responsive Design
 @media (max-width: 768px) {
     .blog-box {
         width: 45%;
@@ -653,12 +653,20 @@ button {
     .blog-box {
         width: 100%;
     }
-}
+} */
+
 .blog-text p {
     display: none;
 }
 .blog-text.expanded p {
     display: block;
+}
+.hide-more {
+    display: none;
+}
+
+.blog-text.expanded .hide-more {
+    display: inline;
 }
 .blog-text.expanded .read-more {
     display: none;
@@ -666,7 +674,7 @@ button {
 
 .blog-services {
     background: #fff;
-    padding: 2rem;
+    padding: 1rem;
     text-align: center;
 }
 

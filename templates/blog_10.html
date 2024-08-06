@@ -20,7 +20,7 @@
             <!-- Blog Post 1 -->
             <div class="blog-box">
                 <div class="blog-img">
-                    <img src="https://images.pexels.com/photos/112811/pexels-photo-112811.jpeg?auto=compress&cs=tinysrgb&w=600" alt="AI Over Humans">
+                    <img src="{{url_for('static', filename='img/OverH.jpg')}}" alt="AI Over Humans">
                 </div>
                 <div class="blog-text" id="blog1">
                     <span>5 August, 2024</span>
@@ -32,6 +32,8 @@
                     <br><br>
                     <center>
                         <a href="#" class="read-more" data-target="blog1" style="color: black;">Read more</a>
+                        <button class="hide-more " data-target="blog1">Hide</button>
+
                     </center>
                 </div>
             </div>
@@ -39,7 +41,7 @@
             <!-- Blog Post 2 -->
             <div class="blog-box">
                 <div class="blog-img">
-                    <img src="https://images.pexels.com/photos/1766604/pexels-photo-1766604.jpeg?auto=compress&cs=tinysrgb&w=600" alt="AI Future">
+                    <img src="{{url_for('static', filename='img/future.jpg')}}" alt="AI Future">
                 </div>
                 <div class="blog-text" id="blog2">
                     <span>10 August, 2024</span>
@@ -51,13 +53,14 @@
                     <br><br>
                     <center>
                         <a href="#" class="read-more" data-target="blog2" style="color: black;">Read more</a>
+                        <button class="hide-more" data-target="blog2">Hide</button>
                     </center>
                 </div>
             </div>
 
             <div class="blog-box">
                 <div class="blog-img">
-                    <img src="https://images.pexels.com/photos/3184435/pexels-photo-3184435.jpeg?auto=compress&cs=tinysrgb&w=600" alt="AI Savior or Opponent">
+                    <img src="{{url_for('static', filename='img/save.jpg')}}" alt="AI Savior or Opponent">
                 </div>
                 <div class="blog-text" id="blog3">
                     <span>15 August, 2024</span>
@@ -69,13 +72,15 @@
                     <br><br>
                     <center>
                         <a href="#" class="read-more" data-target="blog3" style="color: black;">Read more</a>
+                        <button class="hide-more" data-target="blog3" >Hide</button>
+
                     </center>
                 </div>
             </div>
 
             <div class="blog-box">
                 <div class="blog-img">
-                    <img src="https://images.pexels.com/photos/112811/pexels-photo-112811.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Job Recession">
+                    <img src="{{url_for('static', filename='img/Jobs.jpg')}}" alt="Job Recession">
                 </div>
                 <div class="blog-text", id="blog4">
                     <span>20 August, 2024</span>
@@ -87,6 +92,8 @@
                     <br><br>
                     <center>
                         <a href="#" class="read-more" data-target="blog4" style="color: black;">Read more</a>
+                        <button class="hide-more" data-target="blog4">Hide</button>
+
                     </center>
                 </div>
             </div>
@@ -106,6 +113,8 @@
                     <br><br>
                     <center>
                         <a href="#" class="read-more" data-target="blog5" style="color: black;">Read more</a>
+                        <button class="hide-more" data-target="blog5">Hide</button>
+
                     </center>
                 </div>
             </div>
@@ -125,13 +134,15 @@
                     <br><br>
                     <center>
                         <a href="#" class="read-more" data-target="blog6" style="color: black;">Read more</a>
+                        <button class="hide-more" data-target="blog6">Hide</button>
+
                     </center>
                 </div>
             </div>
         </div>
     </section>
     <section class="blog-services">
-        <h2 style="color: red;">Read More here</h2>
+        <h2>Read More here</h2>
         <ul>
             <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10690520/"><li>AI on Population Mental Health</li></a>
             <a href="https://hbr.org/2021/03/ai-should-augment-human-intelligence-not-replace-it"><li>AI Should Augment Human Intelligence, Not Replace It</li></a>
@@ -142,13 +153,26 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const readMoreLinks = document.querySelectorAll('.read-more');
+            const hideMoreLinks = document.querySelectorAll('.hide-more');
+
             readMoreLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
                     const targetId = this.getAttribute('data-target');
                     const targetElement = document.getElementById(targetId);
                     if (targetElement) {
-                        targetElement.classList.toggle('expanded');
+                        targetElement.classList.add('expanded');
+                    }
+                });
+            });
+
+            hideMoreLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('data-target');
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        targetElement.classList.remove('expanded');
                     }
                 });
             });
