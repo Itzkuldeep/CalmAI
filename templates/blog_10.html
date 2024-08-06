@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>calmAI | Blogs </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<style>
+    *{
+        margin: 0px;
+        padding: 0px;
+        font-family: poppins;
+        box-sizing: border-box;
+    }
+    a{
+        text-decoration: none;
+    }
+    ul{
+        list-style: none;
+    }
+    body{
+        margin: 0px;
+        padding: 0px;
+        font-family: poppins;
+    }
+    #blog{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 40px;
+        border-bottom: 1px solid rgb(0, 0,0,0.05);
+    }
+    .blog-head{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+    .blog-head span{
+        color: #f33c3c;
+    }
+    .blog-head h3{
+        font-size: 2.4rem;
+        color: #2b2b2b;
+        font-weight: 600;
+    }
+
+    .blog-container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 20px 0px;
+        flex-wrap: wrap;
+    }
+    .blog-box {
+        width: 350px;
+        background-color: #ffffff;
+        border: 1px solid #ececec;
+        margin: 20px;
+    }
+    .blog-img{
+        width: 100%;
+        height: auto;
+    }
+    .blog-img img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+    .blog-text{
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+    }
+    .blog-text span{
+        color: #f33c3c;
+        font-size: 0.9rem;
+    }
+
+    .blog-text .blog-title{
+        font-size: 1.3rem;
+        font-weight: 500;
+        color: #272727;
+    }
+    .blog-text .blog-title:hover{
+        color: #f33c3c;
+        transition: all ease 0.3s;
+    }
+    .blog-text p{
+        color: #9b9b9b;
+        font-size: 0.9rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin: 20px 0px;
+    }
+    .blog-text a{
+        color: #0f0f0f;
+    }
+    .blog-text a:hover{
+        color: #f33c3c;
+        transition: all ease 0.3s;
+    }
+</style>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    {% block head %}
+    {% endblock %}
+    <section id="blog">
+        <div class="blog-head">
+            <span>Blogs for You</span>
+            <h3>Recent Blog</h3>
+        </div>
+
+        <div class="blog-containter">
+            
+            <div class="blog-box">
+                <div class="blog-img">
+                    <img src="#" alt="Blog">
+                </div>
+                <div class="blog-tex">
+                    <span>18-July / AI over World</span>
+                    <a href="#" class="blog-title">Is this the AI generation or AI humans generation ?</a>
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam accusamus animi numquam autem architecto esse, neque molestias tempora necessitatibus laboriosam!</p>
+                    <a href="{{url_for('static', filename='img/care.jpg')}}">Read more...</a>
+                </div>
+            </div>
+
+            <div class="blog-box">
+                <div class="blog-img">
+                    <img src="#" alt="Blog">
+                </div>
+                <div class="blog-tex">
+                    <span>18-July / AI over World</span>
+                    <a href="#" class="blog-title">Is this the AI generation or AI humans generation ?</a>
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam accusamus animi numquam autem architecto esse, neque molestias tempora necessitatibus laboriosam!</p>
+                    <a href="#">Read more...</a>
+                </div>
+            </div>
+
+            <div class="blog-box">
+                <div class="blog-img">
+                    <img src="#" alt="Blog">
+                </div>
+                <div class="blog-tex">
+                    <span>18-July / AI over World</span>
+                    <a href="#" class="blog-title">Is this the AI generation or AI humans generation ?</a>
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam accusamus animi numquam autem architecto esse, neque molestias tempora necessitatibus laboriosam!</p>
+                    <a href="#">Read more...</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% include 'footer.html' %}
+    {% block down %}
+    {% endblock %}
+</body>
+</html>

@@ -205,9 +205,9 @@ def notebook():
     db, cur = conn()
     id = session['user_id']
     cur.execute(f"SELECT content FROM notes WHERE user_id = {id};")
-    note = cur.fetchone()  # Fetch one row
+    note = cur.fetchone()  
     if note is None:
-        note = []  # Or handle as per your requirement
+        note = []  
     print(note)
     return render_template('notebook.html', note=note)
 
@@ -238,6 +238,10 @@ def delete_note():
 def logout():
     session["name"] = None
     return redirect("/")
+
+@app.route("/blogs/")
+def blogs():
+    return render_template("blog_10.html")
 
 if __name__ == '__main__':
     app.run(debug=True)
