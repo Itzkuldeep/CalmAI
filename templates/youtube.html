@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Gallery</title>
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+</head>
+<body>
+    {% include 'navbar.html' %}
+    {% block head %}
+    {% endblock %}
+    <!-- Main Video Gallery Section -->
+    <section id="videos">
+        <div class="video-head">
+            <span>Videos</span>
+            <h3>To relax you mind</h3>
+        </div>
+        <div class="video-container">
+
+            <!-- Video 1 -->
+            <div class="video-box">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/YOUR_VIDEO_ID1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <div class="video-text">
+                    <span>5 August, 2024</span>
+                    <a href="#" class="video-title">Video Title 1</a>
+                </div>
+            </div>
+
+            <!-- Video 2 -->
+            <div class="video-box">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/YOUR_VIDEO_ID2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <div class="video-text">
+                    <span>10 August, 2024</span>
+                    <a href="#" class="video-title">Video Title 2</a>
+                </div>
+            </div>
+
+            <!-- Video 3 -->
+            <div class="video-box">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/YOUR_VIDEO_ID3" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <div class="video-text">
+                    <span>15 August, 2024</span>
+                    <a href="#" class="video-title">Video Title 3</a>
+                </div>
+            </div>
+
+            <!-- Add more video boxes as needed -->
+
+        </div>
+    </section>
+    {% include 'footer.html' %}
+    {% block down %}
+    {% endblock %}
+</body>
+</html>

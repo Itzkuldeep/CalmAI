@@ -239,6 +239,10 @@ def logout():
     session["name"] = None
     return redirect("/")
 
+@app.route('/youtube')
+def youtube():
+    return render_template('youtube.html')
+
 @app.route("/blogs/")
 def blogs():
     return render_template("blog_10.html")
