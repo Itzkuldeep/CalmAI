@@ -38,27 +38,37 @@
         </section>
         <section class="highlights">
             <div class="highlight">
-                <a href="/chatbot">
+                <a href="/chatbot" style="text-decoration: none;">
                     <img src="{{url_for('static', filename='img/chatbot.jpg')}}" alt="AI Chat Support">
+                    <h3>24/7 AI Chat Support</h3>
+                    <p>Connect with our AI chat support anytime, anywhere.</p>
                 </a>
-                <h3>24/7 AI Chat Support</h3>
-                <p>Connect with our AI chat support anytime, anywhere.</p>
             </div>
+
             <div class="highlight">
+                <a href="/services" style="text-decoration: none;">
                 <img src="{{url_for('static', filename='img/mental health.jpg')}}" alt="Mental Health Resources">
                 <h3>Mental Health Resources</h3>
                 <p>Access a wealth of information and resources to help you on your journey.</p>
+            </a>
             </div>
+            
             <div class="highlight">
+                <a href="#" style="text-decoration: none;">
                 <img src="{{url_for('static', filename='img/self-assess.jpg')}}" alt="Personalized Self-Assessment">
                 <h3>Personalized Self-Assessment</h3>
-                <p>Understand yourself better with our personalized self-assessment tools.</p>
-            </div>
+                <p style="color: black;">Understand yourself better with our personalized self-assessment tools.</p>
+            </a>
+            </div>l
+
             <div class="highlight">
+                <a href="/youtube" style="text-decoration: none;">
                 <img src="{{url_for('static', filename='img/care.jpg')}}" alt="Wellness Activities">
                 <h3>Wellness Activities and Tips</h3>
-                <p>Discover activities and tips to improve your mental well-being.</p>
+                <p style="color: black;">Discover activities and tips to improve your mental well-being.</p>
+            </a>
             </div>
+        
         </section>
     </main>
     {% include 'footer.html' %}

@@ -107,7 +107,7 @@ def login():
                 session['name'] = data[1]
                 session['email'] = data[2]
                 flash('Logged in Successfully!!!')
-                return render_template('index_01.html', flash=flash)
+                return redirect('/')
             else:
                 flash('Invalid Credentials')
                 return render_template('login_06.html', message = flash)
