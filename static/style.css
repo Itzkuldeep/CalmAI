@@ -141,7 +141,7 @@ button:hover {
     background: #3700b3;
 }
 
-form {
+.contact-form {
     max-width: 600px;
     margin: 2rem auto;
     background: #fff;
@@ -523,7 +523,9 @@ button {
     padding: 1px;
     /* border: 1px solid #ddd; */
     border-radius: 5px;
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
+    padding:1em;
+    margin: 0.5em auto;
     display:flex;
     justify-content: space-between;
     align-items: center;
@@ -546,7 +548,7 @@ button {
 .delete-btn {
     background-color: #ff4d4d;
     /* color: white; */
-    padding: 5px 10px;
+    /* padding: 5px 10px; */
     border: none;
     border-radius: 5px;
     cursor: pointer;

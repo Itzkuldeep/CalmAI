@@ -204,8 +204,8 @@ def aftersubmit():
 def notebook():
     db, cur = conn()
     id = session['user_id']
-    cur.execute(f"SELECT content FROM notes WHERE user_id = {id};")
-    note = cur.fetchone()  
+    cur.execute(f"SELECT id,content FROM notes WHERE user_id = {id};")
+    note = cur.fetchall()  
     if note is None:
         note = []  
     print(note)
@@ -228,8 +228,9 @@ def add_note():
 @app.route('/delete_note', methods=['POST'])
 def delete_note():
     db,cur = conn()
+    data = request.form.get('ids')
     id = session['user_id']
-    cur.execute(f"DELETE FROM notes WHERE user_id = '{id}';")
+    cur.execute(f"DELETE FROM notes WHERE id = '{data}';")
     db.commit()
     return redirect('/notebook')
 

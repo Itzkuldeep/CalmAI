@@ -27,14 +27,18 @@
             <h2>Your Notes</h2>
         </center>
         {% if note %}
+        {% for notes in note %}
             <div class="note">
-                {% for notes in note %}
-                <span class="note-content">{{ notes }}</span>
-                {% endfor %}
-                <form action="/delete_note" method="POST" style="display:inline;">
+                
+                <span class="note-content">{{ notes[1] }}</span>
+                
+                <form action="/delete_note" method="POST" >
+                    <input name="ids" value={{notes[0]}} type="hidden">
                     <button type="submit" class="delete-btn">Delete</button>
                 </form>
+                
             </div>
+            {% endfor %}
         {% else %}
             <center>
                 <p>No Previous Notes Found</p>
