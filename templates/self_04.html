@@ -1,12 +1,20 @@
-{% include 'navbar.html' %}
-{% block head %}
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mental Health Self-Assessment</title>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    {% block head %}
+    {% endblock %}
     <main>
         <section>
             <h2>Mental Health Self-Assessment</h2>
-            <form id="assessmentForm">
+            <form id="assessmentForm" class="contact-form" method="POST" action="/submit">
                 <label for="question1">How often do you feel anxious?</label>
-                <select id="question1">
+                <select id="question1" name="question1">
                     <option value="never">Never</option>
                     <option value="rarely">Rarely</option>
                     <option value="sometimes">Sometimes</option>
@@ -14,34 +22,30 @@
                     <option value="always">Always</option>
                 </select>
                 <label for="question2">How often do you feel down or depressed?</label>
-                <select id="question2">
+                <select id="question2" name="question2">
                     <option value="never">Never</option>
                     <option value="rarely">Rarely</option>
                     <option value="sometimes">Sometimes</option>
                     <option value="often">Often</option>
                     <option value="always">Always</option>
                 </select>
-                <button type="button" onclick="submitAssessment()">Submit</button>
+                <br>
+                <button type="submit">Submit</button>
             </form>
             <center>
-                <div id="result" style="font-size: larger;"></div>
+                <br>
+                <strong>
+                    <div id="result" style="font-size: larger;">{{ result }}</div>
+                </strong>
+            </center>
+            <br>
+            <center>
+                <a href="/graph">View Assessment Results Graph</a>
             </center>
         </section>
     </main>
-    
-    <script>
-        function submitAssessment() {
-            const question1 = document.getElementById('question1').value;
-            const question2 = document.getElementById('question2').value;
-            let resultText = 'Assessment Results: ';
-            if (question1 === 'often' || question1 === 'always' || question2 === 'often' || question2 === 'always') {
-                resultText += 'You may benefit from speaking with a mental health professional.';
-            } else {
-                resultText += 'Your responses suggest you are doing well.';
-            }
-            document.getElementById('result').innerText = resultText;
-        }
-    </script>
-{% include 'footer.html' %}
-{% block down %}
-{% endblock %}
+    {% include 'footer.html' %}
+    {% block down %}
+    {% endblock %}
+</body>
+</html>

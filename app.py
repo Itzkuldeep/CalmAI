@@ -1,4 +1,6 @@
 from flask import Flask, render_template, redirect, request, session, flash
+from flask import Flask, jsonify
+from flask_sqlalchemy import SQLAlchemy
 from flask_session import Session
 import random as rd
 import math
@@ -9,8 +11,14 @@ import smtplib
 app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///assessments.db'
+db = SQLAlchemy(app)
 Session(app)
 
+class Assessment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    question1 = db.Column(db.String(20), nullable=False)
+    question2 = db.Column(db.String(20), nullable=False)
 
 def conn():
     db = sql.connect(host='localhost', user='root',
@@ -46,7 +54,8 @@ def passkey(password):
 def home():
     if 'email' not in session:
         return render_template('login_06.html')
-    return render_template('index_01.html')
+    user = session['name']
+    return render_template('index_01.html', user=user)
 
 
 @app.route('/services/')
@@ -247,6 +256,41 @@ def youtube():
 @app.route("/blogs/")
 def blogs():
     return render_template("blog_10.html")
+
+@app.route('/self/')
+def self():
+    return render_template('self_04.html')
+
+@app.route('/submit', methods=['POST'])
+def submit_assessment():
+    question1 = request.form.get('question1')
+    question2 = request.form.get('question2')
+
+    db,cur = conn()
+    sql = "INSERT INTO assessments (question1, question2) VALUES (%s, %s)"
+    cur.execute(sql, (question1, question2))
+    db.commit()
+
+    result_text = 'Assessment Results: '
+    if (question1 == 'Never' or question1 == 'Never' or question2 == 'often' or question2 == 'always'):
+                result_text += 'You may benefit from speaking with a mental health professional.'
+    else:
+        result_text += 'Your responses suggest you are doing well.'
+
+    return render_template('self_04.html', result=result_text)
+
+@app.route('/data')
+def get_data():
+    db,cur = conn()
+    cur.execute("SELECT * FROM assessments;")
+    assessments = cur.fetchall()
+    return jsonify(assessments)
+
+@app.route('/graph')
+def graph():
+    return render_template('graph.html')
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

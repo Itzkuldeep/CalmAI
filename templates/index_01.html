@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>calmAI</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- <link rel="icon" href="{{url_for('static', filename='calmai-favicon-white.png')}}" type="image/x-icon"> -->
     <link rel="shortcut icon" href="{{url_for('static', filename='calmai-favicon-white.png')}}" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -17,7 +17,7 @@
     <main>
         <center>
             {% for msg in get_flashed_messages() %}
-            <div class="alert alert-success  alert-dismissible fade show" role="alert">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <strong>{{ msg }}</strong>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
@@ -32,8 +32,7 @@
             <h2>Our Mission</h2>
             <p>
                 At calmAI, we are dedicated to providing accessible and personalized mental health support through
-                advanced AI technology.
-                Our goal is to create a compassionate and supportive environment for everyone.
+                advanced AI technology. Our goal is to create a compassionate and supportive environment for everyone.
             </p>
         </section>
         <section class="highlights">
@@ -47,33 +46,160 @@
 
             <div class="highlight">
                 <a href="/services" style="text-decoration: none;">
-                <img src="{{url_for('static', filename='img/mental health.jpg')}}" alt="Mental Health Resources">
-                <h3>Mental Health Resources</h3>
-                <p>Access a wealth of information and resources to help you on your journey.</p>
-            </a>
+                    <img src="{{url_for('static', filename='img/mental health.jpg')}}" alt="Mental Health Resources">
+                    <h3>Mental Health Resources</h3>
+                    <p>Access a wealth of information and resources to help you on your journey.</p>
+                </a>
             </div>
             
             <div class="highlight">
                 <a href="#" style="text-decoration: none;">
-                <img src="{{url_for('static', filename='img/self-assess.jpg')}}" alt="Personalized Self-Assessment">
-                <h3>Personalized Self-Assessment</h3>
-                <p style="color: black;">Understand yourself better with our personalized self-assessment tools.</p>
-            </a>
-            </div>l
+                    <img src="{{url_for('static', filename='img/self-assess.jpg')}}" alt="Personalized Self-Assessment">
+                    <h3>Personalized Self-Assessment</h3>
+                    <p style="color: black;">Understand yourself better with our personalized self-assessment tools.</p>
+                </a>
+            </div>
 
             <div class="highlight">
                 <a href="/youtube" style="text-decoration: none;">
-                <img src="{{url_for('static', filename='img/care.jpg')}}" alt="Wellness Activities">
-                <h3>Wellness Activities and Tips</h3>
-                <p style="color: black;">Discover activities and tips to improve your mental well-being.</p>
-            </a>
+                    <img src="{{url_for('static', filename='img/care.jpg')}}" alt="Wellness Activities">
+                    <h3>Wellness Activities and Tips</h3>
+                    <p style="color: black;">Discover activities and tips to improve your mental well-being.</p>
+                </a>
             </div>
-        
+        </section>
+
+        <!-- Chart Section -->
+        <section class="chart-section">
+            <h2>Assessment Results</h2>
+            <canvas id="assessmentChart" width="400" height="200"></canvas>
         </section>
     </main>
-    {% include 'footer.html' %}
-    {% block down %}
-    {% endblock %}
-</body>
+    <script>
+        async function fetchData() {
+            const response = await fetch('/data');
+            const data = await response.json();
+            return data;
+        }
 
+        function mapResponse(value) {
+            switch (value) {
+                case 'never': return 0;
+                case 'rarely': return 1;
+                case 'sometimes': return 2;
+                case 'often': return 3;
+                case 'always': return 4;
+                default: return 0;
+            }
+        }
+
+        async function createChart() {
+            const data = await fetchData();
+            const ctx = document.getElementById('assessmentChart').getContext('2d');
+
+            const labels = data.map((_, index) => `Assessment ${index + 1}`);
+            const anxietyData = data.map(d => mapResponse(d[1]));
+            const depressionData = data.map(d => mapResponse(d[2]));
+
+            const chartData = {
+                labels: labels,
+                datasets: [{
+                    label: 'Anxiety Level',
+                    data: anxietyData,
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1,
+                    fill: true
+                }, {
+                    label: 'Depression Level',
+                    data: depressionData,
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1,
+                    fill: true
+                }]
+            };
+
+            new Chart(ctx, {
+                type: 'line',
+                data: chartData,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    const labels = ['Never', 'Rarely', 'Sometimes', 'Often', 'Always'];
+                                    return labels[value];
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: true
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.dataset.label || '';
+                                    if (label) {
+                                        return label + ': ' + context.raw;
+                                    }
+                                    return '';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Call createChart only if the user is logged in
+        {% for users in user %}
+        {% if users.is_authenticated %}
+            createChart();
+        { % else % }
+            // Generate zigzag pattern for non-logged-in users
+            const ctx = document.getElementById('assessmentChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: Array.from({length: 10}, (_, i) => `Point ${i + 1}`),
+                    datasets: [{
+                        label: 'Zigzag Pattern',
+                        data: Array.from({length: 10}, (_, i) => i % 2 === 0 ? 0 : 4),
+                        borderColor: 'rgba(0, 0, 0, 1)',
+                        borderWidth: 1,
+                        fill: false
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    const labels = ['Never', 'Rarely', 'Sometimes', 'Often', 'Always'];
+                                    return labels[value];
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            enabled: false
+                        }
+                    }
+                }
+            });
+            { % endif %}
+    </script>
+        {% include 'footer.html' %}
+        {% block down %}
+        {% endblock %}
+</body>
 </html>
