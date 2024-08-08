@@ -81,7 +81,7 @@
             const data = await response.json();
             return data;
         }
-
+    
         function mapResponse(value) {
             switch (value) {
                 case 'never': return 0;
@@ -92,15 +92,15 @@
                 default: return 0;
             }
         }
-
+    
         async function createChart() {
             const data = await fetchData();
             const ctx = document.getElementById('assessmentChart').getContext('2d');
-
+    
             const labels = data.map((_, index) => `Assessment ${index + 1}`);
             const anxietyData = data.map(d => mapResponse(d[1]));
             const depressionData = data.map(d => mapResponse(d[2]));
-
+    
             const chartData = {
                 labels: labels,
                 datasets: [{
@@ -119,7 +119,7 @@
                     fill: true
                 }]
             };
-
+    
             new Chart(ctx, {
                 type: 'line',
                 data: chartData,
@@ -154,7 +154,55 @@
                 }
             });
         }
-    </script>
+        </script>
+    
+        // Call createChart only if the user is logged in
+        {% if is_authenticated %}
+        <script>
+
+            createChart();
+        </script>
+        
+        {% else %}
+        <script>
+            // Generate zigzag pattern for non-logged-in users
+            const ctx = document.getElementById('assessmentChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: Array.from({length: 10}, (_, i) => `Point ${i + 1}`),
+                    datasets: [{
+                        label: 'Zigzag Pattern',
+                        data: Array.from({length: 10}, (_, i) => i % 2 === 0 ? 0 : 4),
+                        borderColor: 'rgba(0, 0, 0, 1)',
+                        borderWidth: 1,
+                        fill: false
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    const labels = ['Never', 'Rarely', 'Sometimes', 'Often', 'Always'];
+                                    return labels[value];
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            enabled: false
+                        }
+                    }
+                }});
+        </script>
+        {% endif %}
+
         {% include 'footer.html' %}
         {% block down %}
         {% endblock %}
