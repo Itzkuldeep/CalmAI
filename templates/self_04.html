@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mental Health Self-Assessment</title>
 </head>
+
 <body>
     {% include 'navbar.html' %}
     {% block head %}
     {% endblock %}
     <main>
         <section>
-            <h2>Mental Health Self-Assessment</h2>
+            <center>
+                <h2>Mental Health Self-Assessment</h2>
+            </center>
             <form id="assessmentForm" class="contact-form" method="POST" action="/submit">
                 <label for="question1">How often do you feel anxious?</label>
+                <br><br>
                 <select id="question1" name="question1">
                     <option value="never">Never</option>
                     <option value="rarely">Rarely</option>
@@ -21,7 +26,8 @@
                     <option value="often">Often</option>
                     <option value="always">Always</option>
                 </select>
-                <label for="question2">How often do you feel down or depressed?</label>
+                <br>
+                <label for="question2">How often do you feel down or depressed?</label><br><br>
                 <select id="question2" name="question2">
                     <option value="never">Never</option>
                     <option value="rarely">Rarely</option>
@@ -48,4 +54,5 @@
     {% block down %}
     {% endblock %}
 </body>
+
 </html>

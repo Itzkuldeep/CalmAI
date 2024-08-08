@@ -154,49 +154,6 @@
                 }
             });
         }
-
-        // Call createChart only if the user is logged in
-        {% for users in user %}
-        {% if users.is_authenticated %}
-            createChart();
-        { % else % }
-            // Generate zigzag pattern for non-logged-in users
-            const ctx = document.getElementById('assessmentChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: Array.from({length: 10}, (_, i) => `Point ${i + 1}`),
-                    datasets: [{
-                        label: 'Zigzag Pattern',
-                        data: Array.from({length: 10}, (_, i) => i % 2 === 0 ? 0 : 4),
-                        borderColor: 'rgba(0, 0, 0, 1)',
-                        borderWidth: 1,
-                        fill: false
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                callback: function(value) {
-                                    const labels = ['Never', 'Rarely', 'Sometimes', 'Often', 'Always'];
-                                    return labels[value];
-                                }
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        tooltip: {
-                            enabled: false
-                        }
-                    }
-                }
-            });
-            { % endif %}
     </script>
         {% include 'footer.html' %}
         {% block down %}

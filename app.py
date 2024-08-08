@@ -1,24 +1,16 @@
 from flask import Flask, render_template, redirect, request, session, flash
 from flask import Flask, jsonify
-from flask_sqlalchemy import SQLAlchemy
 from flask_session import Session
 import random as rd
 import math
 import pymysql as sql
 import smtplib
-
+import hashlib
 
 app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///assessments.db'
-db = SQLAlchemy(app)
 Session(app)
-
-class Assessment(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    question1 = db.Column(db.String(20), nullable=False)
-    question2 = db.Column(db.String(20), nullable=False)
 
 def conn():
     db = sql.connect(host='localhost', user='root',
@@ -49,14 +41,34 @@ def passkey(password):
     else:
         return False
 
+def SHA(password):
+    string_to_hash = password
+    
+    hash_object = hashlib.sha256(string_to_hash.encode('utf-8'))
+    
+    hex_digest = hash_object.hexdigest()
+    
+    return hex_digest
+
+def SHA_verify(password, stored):
+    input_hash = hashlib.sha256(password.encode('utf-8')).hexdigest()
+    
+    stored_hash = stored
+    if input_hash == stored_hash:
+        return True
+    else:
+        return False
+
+
 
 @app.route('/')
 def home():
     if 'email' not in session:
+        is_authenticated = False
         return render_template('login_06.html')
-    user = session['name']
-    return render_template('index_01.html', user=user)
-
+    is_authenticated = True
+    return render_template('index_01.html', is_authenticated=is_authenticated)
+    
 
 @app.route('/services/')
 def service():
@@ -103,23 +115,29 @@ def aftercontact():
 @app.route('/login/', methods=['GET','POST'])
 def login():
     if request.method == 'POST':
+        db,cur = conn()
         email = request.form.get('email')
         password = request.form.get('password')
-        db,cur = conn()
+        cur.execute(f'SELECT password_hash FROM users  WHERE email = "{email}";')
+        data = cur.fetchone()
+        input_hash = hashlib.sha256(password.encode('utf-8')).hexdigest()
+        stored_hash = data[0]
         try:
-            cmd = f"SELECT user_id,username,email,phone FROM users where email ='{email}' and password_hash = '{password}';"
-            cur.execute(cmd)
-            data = cur.fetchone()
-            if data:
-                session['user_id'] = data[0]
-                print(session['user_id'])
-                session['name'] = data[1]
-                session['email'] = data[2]
-                flash('Logged in Successfully!!!')
-                return redirect('/')
+            if input_hash == stored_hash:    
+                cmd = f"SELECT user_id,username,email,phone FROM users where email ='{email}';"
+                cur.execute(cmd)
+                data = cur.fetchone()
+                print(data)
+                if data:
+                    session['user_id'] = data[0]
+                    print(session['user_id'])
+                    session['name'] = data[1]
+                    session['email'] = data[2]
+                    flash('Logged in Successfully!!!')
+                    return redirect('/')
             else:
                 flash('Invalid Credentials')
-                return render_template('login_06.html', message = flash)
+                return render_template('login_06.html')
         except Exception as e:
             print(e)
             print('Details does not match')
@@ -199,15 +217,17 @@ def aftersubmit():
         session['email'] = email
         phone = request.form.get('phone')
         password = request.form.get('password')
+        hash_object = hashlib.sha256(password.encode('utf-8'))
+        password_hashed = hash_object.hexdigest()
         db,cur = conn()
         if passkey(password):
-            cur.execute(f"INSERT INTO users (user_id,username,email,password_hash,phone) VALUES ({id},'{name}','{email}','{password}','{phone}');")
+            cur.execute(f"INSERT INTO users (user_id,username,email,password_hash,phone) VALUES ({id},'{name}','{email}','{password_hashed}','{phone}');")
             db.commit()
             flash('Acoount Created Successfull!!!')
-            return render_template('index_01.html', flash=flash)
+            return render_template('index_01.html')
         else:
             flash('Invalid details Try Again')
-            return render_template('signup_06.html', message = flash)
+            return render_template('signup_06.html')
         
 @app.route('/notebook')
 def notebook():
