@@ -43,11 +43,11 @@ def passkey(password):
 
 @app.route('/')
 def home():
-    if 'email' not in session:
-        is_authenticated = False
-        return render_template('login_06.html')
-    is_authenticated = True
-    return render_template('index_01.html', is_authenticated=is_authenticated)
+    # if 'email' not in session:
+    #     is_authenticated = False
+    #     return render_template('login_06.html')
+    # is_authenticated = True
+    return render_template('index_01.html')
     
 
 @app.route('/services/')
@@ -247,6 +247,8 @@ def delete_note():
 @app.route("/logout")
 def logout():
     session["name"] = None
+    session['user_id'] = None
+    session['email'] = None
     return redirect("/")
 
 @app.route('/youtube')
