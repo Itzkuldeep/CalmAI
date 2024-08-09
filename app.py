@@ -41,26 +41,6 @@ def passkey(password):
     else:
         return False
 
-def SHA(password):
-    string_to_hash = password
-    
-    hash_object = hashlib.sha256(string_to_hash.encode('utf-8'))
-    
-    hex_digest = hash_object.hexdigest()
-    
-    return hex_digest
-
-def SHA_verify(password, stored):
-    input_hash = hashlib.sha256(password.encode('utf-8')).hexdigest()
-    
-    stored_hash = stored
-    if input_hash == stored_hash:
-        return True
-    else:
-        return False
-
-
-
 @app.route('/')
 def home():
     if 'email' not in session:

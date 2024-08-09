@@ -72,7 +72,7 @@
         <!-- Chart Section -->
         <section class="chart-section">
             <h2>Assessment Results</h2>
-            <canvas id="assessmentChart" width="400" height="200"></canvas>
+            <canvas id="assessmentChart" width="250" height="70"></canvas>
         </section>
     </main>
     <script>
@@ -156,14 +156,14 @@
         }
         </script>
     
-        // Call createChart only if the user is logged in
-        {% if is_authenticated %}
+        <!-- // Call createChart only if the user is logged in
+        {% if is_authenticated %} -->
         <script>
 
             createChart();
         </script>
         
-        {% else %}
+        <!-- {% else %} -->
         <script>
             // Generate zigzag pattern for non-logged-in users
             const ctx = document.getElementById('assessmentChart').getContext('2d');
@@ -201,8 +201,7 @@
                     }
                 }});
         </script>
-        {% endif %}
-
+        <!-- {% endif %} -->
         {% include 'footer.html' %}
         {% block down %}
         {% endblock %}
