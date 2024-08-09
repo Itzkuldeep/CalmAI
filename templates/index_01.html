@@ -68,11 +68,15 @@
                 </a>
             </div>
         </section>
-
         <!-- Chart Section -->
+        <section class="hero">
         <section class="chart-section">
-            <h2>Assessment Results</h2>
+            <h2 class="hero-text">Mood Tracker</h2>
+            <p>This Graph is Plotted based on the Assessment Test</p>
             <canvas id="assessmentChart" width="250" height="70"></canvas>
+            <br>
+            <br>
+        </section>
         </section>
     </main>
     <script>
@@ -107,14 +111,14 @@
                     label: 'Anxiety Level',
                     data: anxietyData,
                     backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderColor: 'rgba(255, 255, 132, 1)',
                     borderWidth: 1,
                     fill: true
                 }, {
                     label: 'Depression Level',
                     data: depressionData,
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
+                    // backgroundColor: 'rgba(14, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 252, 235, 1)',
                     borderWidth: 1,
                     fill: true
                 }]
