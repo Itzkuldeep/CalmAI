@@ -87,8 +87,8 @@ footer {
     background: #6200ea;
     color: #fff;
     text-align: center;
-    padding: 0.5rem 0.5rem;
-    width: 98.95%;
+    padding: 0.5rem 0.9rem;
+    width: 99.95%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -122,7 +122,7 @@ footer p:nth-child(2) a, footer p:nth-child(3) a {
 
 button, select, input[type="text"], input[type="email"], input[type="password"], input[type="number"], textarea {
     display: block;
-    width: 95%;
+    width: 90%;
     padding: 1rem;
     margin: 1rem 0;
     border: none;
@@ -253,6 +253,7 @@ ul li:hover {
     background: #6200ea;
     color: #fff;
     padding: 4rem 0;
+    width: 100%;
     text-align: center;
 }
 

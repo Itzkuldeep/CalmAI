@@ -10,16 +10,26 @@
     </style>
 </head>
 <body>
+    {% include 'navbar.html' %}
+    {% block head %}
+    {% endblock %}
     <div class="reset-container">
         <div class="reset-header">Reset Your Password</div>
         <div class="reset-instructions">Enter the OTP sent to your registered email and your new password below.</div>
-        <form action="/verifyotp" method="POST">
+        <center>
+        <form action="/verifyotp" method="POST" >
+            <label for="otp">Enter OTP:</label>
             <input type="text" name="otp" class="reset-input" placeholder="Enter OTP" required>
+            <label for="new_password">Enter New Password</label>
             <input type="password" name="new_password" class="reset-input" placeholder="New Password" required>
-            <!-- <input type="password" name="confirm_password" class="reset-input" placeholder="Confirm Password" required> -->
-            <button type="submit" class="reset-button">Reset Password</button>
+            <br>
+            <button type="submit">Reset Password</button>
         </form>
+    </center>
         <a href="/login/" class="back-to-login">Back to Login</a>
     </div>
+    {% include 'footer.html' %}
+    {% block down %}
+    {% endblock %}
 </body>
 </html>

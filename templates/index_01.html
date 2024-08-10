@@ -39,8 +39,8 @@
             <div class="highlight">
                 <a href="/chatbot" style="text-decoration: none;">
                     <img src="{{url_for('static', filename='img/chatbot.jpg')}}" alt="AI Chat Support">
-                    <h3>24/7 AI Chat Support</h3>
-                    <p>Connect with our AI chat support anytime, anywhere.</p>
+                    <h3>24/7 AI Chat Support</h3><br>
+                    <p style="color: black;">Connect with our AI chat support anytime, anywhere.</p>
                 </a>
             </div>
 
@@ -48,12 +48,12 @@
                 <a href="/services" style="text-decoration: none;">
                     <img src="{{url_for('static', filename='img/mental health.jpg')}}" alt="Mental Health Resources">
                     <h3>Mental Health Resources</h3>
-                    <p>Access a wealth of information and resources to help you on your journey.</p>
+                    <p style="color: black;">Access a wealth of information and resources to help you on your journey.</p>
                 </a>
             </div>
             
             <div class="highlight">
-                <a href="#" style="text-decoration: none;">
+                <a href="/self/" style="text-decoration: none;">
                     <img src="{{url_for('static', filename='img/self-assess.jpg')}}" alt="Personalized Self-Assessment">
                     <h3>Personalized Self-Assessment</h3>
                     <p style="color: black;">Understand yourself better with our personalized self-assessment tools.</p>
@@ -72,7 +72,11 @@
         <section class="hero">
         <section class="chart-section">
             <h2 class="hero-text">Mood Tracker</h2>
+            {% if is_authenticated %}
             <p>This Graph is Plotted based on the Assessment Test</p>
+            {% else %}
+            <p>Login to see you Mood Graph</p>
+            {% endif %}
             <canvas id="assessmentChart" width="250" height="70"></canvas>
             <br>
             <br>
@@ -101,7 +105,7 @@
             const data = await fetchData();
             const ctx = document.getElementById('assessmentChart').getContext('2d');
     
-            const labels = data.map((_, index) => `Assessment ${index + 1}`);
+            const labels = data.map((_, index) => `${index + 1}`);
             const anxietyData = data.map(d => mapResponse(d[1]));
             const depressionData = data.map(d => mapResponse(d[2]));
     
@@ -205,7 +209,7 @@
                     }
                 }});
         </script>
-        <!-- {% endif %} -->
+        {% endif %}
         {% include 'footer.html' %}
         {% block down %}
         {% endblock %}

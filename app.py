@@ -43,15 +43,18 @@ def passkey(password):
 
 @app.route('/')
 def home():
-    # if 'email' not in session:
-    #     is_authenticated = False
-    #     return render_template('login_06.html')
-    # is_authenticated = True
-    return render_template('index_01.html')
+    if 'email' not in session:
+        is_authenticated = False
+        return render_template('login_06.html')
+    is_authenticated = True
+    return render_template('index_01.html', is_authenticated = is_authenticated)
     
 
 @app.route('/services/')
 def service():
+    if 'email' not in session:
+        flash("Login to use any Serives")
+        return redirect('/login/')
     return render_template('services_03.html')
 
 
@@ -61,6 +64,8 @@ def about():
 
 @app.route('/contact', methods = ['POST','GET'])
 def contact():
+    if 'email' not in session:
+        return redirect('/login/')
     return render_template("contact_05.html")
 
 @app.route("/aftercontact", methods=['GET', 'POST'])
@@ -138,9 +143,6 @@ def otp():
         return redirect('/reset/')
 
     if request.method == 'POST':
-       
-        
-    
         email = request.form.get('email')
         session['email'] = email
         digits = '0123456789'
@@ -162,12 +164,16 @@ def otp():
 @app.route('/verifyotp',methods=["POST"])
 def verifyotp():
     db,cur = conn()
+    email = session['email']
+    print(email)
     otp = request.form.get('otp')
     if str(otp) == str(session.get('otp')):
         print('Verified')
         new_pass = request.form.get('new_password')
+        hash_object = hashlib.sha256(new_pass.encode('utf-8'))
+        password_hashed = hash_object.hexdigest()
         if passkey(new_pass):
-            cmd1 = f"UPDATE users SET password_hash = '{new_pass}' WHERE email = '{session['email']}';"
+            cmd1 = f"UPDATE users SET password_hash = '{password_hashed}' WHERE email = '{email}';"
             cur.execute(cmd1)
             db.commit()
             session['otp']=None
@@ -253,6 +259,9 @@ def logout():
 
 @app.route('/youtube')
 def youtube():
+    if 'email' not in session:
+        flash("Login to use any Services")
+        return redirect('/login/')
     return render_template('youtube.html')
 
 @app.route("/blogs/")
@@ -261,6 +270,9 @@ def blogs():
 
 @app.route('/self/')
 def self():
+    if 'email' not in session:
+        flash("Login to use any Services")
+        return redirect('/login/')
     return render_template('self_04.html')
 
 @app.route('/submit', methods=['POST'])
