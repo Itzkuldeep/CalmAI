@@ -20,6 +20,72 @@ header {
     align-items: center;
 }
 
+@media (max-width: 1024px) {
+    header {
+        padding: 1rem;
+    }
+
+    .hero-text h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero-text p {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    header img {
+        width: 4em;
+    }
+
+    .highlight {
+        flex: 1 1 100%;
+        margin: 0.5rem 0;
+    }
+
+    .about-section {
+        flex-direction: column;
+    }
+
+    .about-image img {
+        max-width: 80%;
+    }
+
+    footer {
+        padding: 1rem;
+        text-align: center;
+    }
+
+    button, select, input[type="text"], input[type="email"], input[type="password"], input[type="number"], textarea {
+        width: 100%;
+        padding: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    nav a {
+        margin: 0.5rem 0;
+    }
+
+    .blog-box, .video-box {
+        width: 100%;
+    }
+
+    .hero-text h1 {
+        font-size: 2rem;
+    }
+
+    .hero-text p {
+        font-size: 1rem;
+    }
+}
+
 header img {
     width: 5em;
 }
