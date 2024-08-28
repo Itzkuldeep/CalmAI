@@ -6,10 +6,15 @@
     <title>Terms and Conditions - calmAI</title>
 </head>
 <body>
-    <header>
-        <h1>Terms and Conditions</h1>
-        <p>Last Updated: [Date]</p>
-    </header>
+    {% include 'navbar.html' %}
+    {% block head %}
+    {% endblock %}
+    <center>
+        <header>
+            <h1>Terms and Conditions</h1>
+            <p>Last Updated: 28-08-2024</p>
+        </header>
+    </center>
     <div class="container">
         <h2>1. Acceptance of Terms</h2>
         <p>
@@ -17,15 +22,15 @@
         </p>
 
         <h2>2. Use of the Service</h2>
-        <h3>Eligibility</h3>
+        <h5>Eligibility</h5>
         <p>
             You must be at least 18 years old or have reached the age of majority in your jurisdiction to use calmAI.
         </p>
-        <h3>Personal Use</h3>
+        <h5>Personal Use</h5>
         <p>
             The calmAI services are intended for personal use only. You agree not to use the service for any commercial purposes.
         </p>
-        <h3>Prohibited Actions</h3>
+        <h5>Prohibited Actions</h5>
         <p>You agree not to:</p>
         <ul>
             <li>Engage in any activity that could harm or disrupt calmAI or its users.</li>
@@ -34,35 +39,35 @@
         </ul>
 
         <h2>3. Intellectual Property</h2>
-        <h3>Ownership</h3>
+        <h5>Ownership</h5>
         <p>
             All content, design, graphics, and software on calmAI are the property of calmAI or its licensors and are protected by copyright, trademark, and other intellectual property laws.
         </p>
-        <h3>License</h3>
+        <h5>License</h5>
         <p>
             You are granted a limited, non-exclusive, non-transferable license to access and use calmAI for personal, non-commercial purposes.
         </p>
 
         <h2>4. User Data and Privacy</h2>
-        <h3>Data Collection</h3>
+        <h5>Data Collection</h5>
         <p>
             calmAI collects certain personal information to provide its services. By using the site, you consent to the collection and use of this data in accordance with our Privacy Policy.
         </p>
-        <h3>Security</h3>
+        <h5>Security</h5>
         <p>
             We take reasonable measures to protect your data, but we cannot guarantee absolute security.
         </p>
 
         <h2>5. Disclaimers and Limitation of Liability</h2>
-        <h3>Health Disclaimer</h3>
+        <h5>Health Disclaimer</h5>
         <p>
             calmAI is a tool designed for self-assessment and is not a substitute for professional mental health care. Always seek the advice of a qualified health provider with any questions you may have regarding a medical condition.
         </p>
-        <h3>No Warranties</h3>
+        <h5>No Warranties</h5>
         <p>
             The service is provided on an "as is" and "as available" basis, without any warranties of any kind.
         </p>
-        <h3>Limitation of Liability</h3>
+        <h5>Limitation of Liability</h5>
         <p>
             To the maximum extent permitted by law, calmAI and its affiliates shall not be liable for any indirect, incidental, special, or consequential damages arising out of or in connection with the use of the service.
         </p>
@@ -82,5 +87,8 @@
             If you have any questions about these Terms and Conditions, please contact us at [Your Contact Information].
         </p>
     </div>
+    {% include 'footer.html' %}
+    {% block down %}
+    {% endblock %}
 </body>
 </html>
