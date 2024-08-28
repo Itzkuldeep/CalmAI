@@ -304,7 +304,9 @@ def get_data():
 def graph():
     return render_template('graph.html')
 
-
+@app.route('/privacy')
+def pvt():
+    return render_template('privacy_08.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
