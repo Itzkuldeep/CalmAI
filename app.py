@@ -308,6 +308,10 @@ def graph():
 def pvt():
     return render_template('privacy_08.html')
 
+@app.route('/terms')
+def termsO():
+    return render_template('terms_09.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
     
