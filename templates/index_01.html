@@ -73,9 +73,9 @@
         <section class="chart-section">
             <h2 class="hero-text">Mood Tracker</h2>
             {% if is_authenticated %}
-            <p>This Graph is Plotted based on the Assessment Test</p>
-            {% else %}
             <p>Login to see you Mood Graph</p>
+            {% else %}
+            <p>This Graph is Plotted based on the Assessment Test</p>
             {% endif %}
             <canvas id="assessmentChart" width="250" height="70"></canvas>
             <br>
